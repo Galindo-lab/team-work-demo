@@ -10,6 +10,12 @@
         <label for="">password: {{ form.password1 }}</label><br>
         <label for="">confirm: {{ form.password2 }}</label><br>
 
+        {% if form.errors %}
+            {{form.username.errors}}
+            {{form.email.errors}}
+            {{form.password2.errors}}
+        {% endif %}
+
         <button>Sign up</button>
     </form>
 {% endblock content %}

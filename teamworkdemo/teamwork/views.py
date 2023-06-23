@@ -16,10 +16,19 @@ def register(request):
             form.save()
             return redirect('dashboard')
 
-    
-    return render(request, 'register.html', {
-        'form': UserRegisterForm()
-    })
+        else:
+            return render(
+                request,
+                'register.html',
+                context={
+                    'form': form
+                }
+            )
+
+    else:
+        return render(request, 'register.html', contex={
+            'form': UserRegisterForm()
+        })
 
 
 @login_required
