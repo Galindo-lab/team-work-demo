@@ -23,11 +23,12 @@ class Group(models.Model):
 
     admin = models.ForeignKey(
         User,
-        related_name='admin',
+        related_name='group_admin',
         on_delete=models.CASCADE
     )
 
     class Meta:
+        # un cada miembro puede tener un equipo con el nombre que quiera
         unique_together = (('name', 'admin'),)
 
 
@@ -38,7 +39,7 @@ class Integrante(models.Model):
 
     member = models.ForeignKey(
         User,
-        related_name='part_of',
+        related_name='group_member',
         on_delete=models.CASCADE
     )
 

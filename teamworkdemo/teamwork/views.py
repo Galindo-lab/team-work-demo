@@ -9,23 +9,24 @@ def home(request):
 
 
 def register(request):
-
-    if request.method == 'POST':
-
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-
-        else:
-            return render(request, 'register.html', context={
-                'form' : form
-            })
-
-    else:
-        return render(request, 'register.html', contex={
+    if request.method != 'POST':
+        # mandar el forlumario vacio, comportamiento default
+        return render(request, 'register.html', {
             'form' : UserRegisterForm()
         })
+
+    # recuperar los datos del formulario
+    form = UserRegisterForm(request.POST)
+
+    if not form.is_valid():
+        # mostrar el formulario con  errores
+        return render(request, 'register.html', {
+            'form' : form
+        })
+    
+    # guardar el registro
+    form.save()
+    return redirect('dashboard')
 
 
 @login_required
@@ -34,8 +35,11 @@ def dashboard(request):
         username = request.user.username
     )
 
-    user_groups = user.admin.all()
-    user_member = user.part_of.all()
+    # grupos creados por el usuario
+    user_groups = user.group_admin.all()
+
+    # grupos a los que el usuario pertenece
+    user_member = user.group_member.all()
 
     return render(request, 'dashboard.html', context={
         'user_groups': user_groups,
