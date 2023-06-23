@@ -17,17 +17,19 @@ class Group(models.Model):
     """
     grupos a lo que pertenecen los miembros
     """
-    group_name = models.CharField(
+    name = models.CharField(
         max_length=200
     )
 
-    group_creator = models.ForeignKey(
+    admin = models.ForeignKey(
         User,
-        related_name='author',
+        related_name='admin',
         on_delete=models.CASCADE
     )
 
-    
+    class Meta:
+        unique_together = (('name', 'admin'),)
+
 
 class Integrante(models.Model):
     """
@@ -35,17 +37,16 @@ class Integrante(models.Model):
     """
 
     member = models.ForeignKey(
-        User, 
+        User,
         related_name='part_of',
         on_delete=models.CASCADE
     )
 
     group = models.ForeignKey(
-        Group, 
+        Group,
         related_name='members',
         on_delete=models.CASCADE
-    ) 
-
+    )
 
 
 class BelbinUserProfile(models.Model):
@@ -59,7 +60,7 @@ class BelbinUserProfile(models.Model):
     )
 
     group_id = models.ForeignKey(
-        Group, 
+        Group,
         related_name='emited_by',
         on_delete=models.CASCADE
     )
@@ -78,6 +79,6 @@ class BelbinUserProfile(models.Model):
     shaper = models.IntegerField()
     implementer = models.IntegerField()
     completer_finisher = models.IntegerField()
-    
+
     class Meta:
         ordering = ['-timestamp']
