@@ -2,7 +2,12 @@
 
 {% block content %}
     <h1>Dashboard</h1>
+    Hola {{ user }}!
 
+
+    <div>
+        <h2>Grupos</h2>
+    </div>
 
     <a href="{% url 'logout' %}" type="submit">
         logout

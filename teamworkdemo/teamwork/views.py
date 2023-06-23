@@ -1,26 +1,37 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from . forms import UserRegisterForm
 
-# pagina de inicio
+
 def home(request):
     return render(request, 'home.html')
 
-# dashboard 
+
+def register(request):
+
+    if request.method == 'POST':
+
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+
+    
+    return render(request, 'register.html', {
+        'form': UserRegisterForm()
+    })
+
+
 @login_required
 def dashboard(request):
     return render(request, 'dashboard.html')
 
-# registrar
-def register(request):
-    pass
+# crear grupos
 
-
-# crear grupos 
-
-# elimiar grupos 
+# elimiar grupos
 
 # agregar a un grupo
 
-# eliminar de un grupo 
+# eliminar de un grupo
 
-# hacer formulario de belbin 
+# hacer formulario de belbin

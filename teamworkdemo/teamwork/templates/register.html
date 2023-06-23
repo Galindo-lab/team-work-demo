@@ -1,0 +1,15 @@
+
+{% block content %}
+    <h1>Register</h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="">name: {{ form.username }}</label><br>
+        <label for="">email: {{ form.email }} </label><br>
+        <label for="">password: {{ form.password1 }}</label><br>
+        <label for="">confirm: {{ form.password2 }}</label><br>
+
+        <button>Sign up</button>
+    </form>
+{% endblock content %}
