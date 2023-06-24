@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
-from . models import Group
-
-from . forms import\
-      UserRegisterForm, CreateGroupForm
+from . models import Group, Integrante
+from . forms import UserRegisterForm, CreateGroupForm
 
 
 def home(request):
@@ -100,11 +97,21 @@ def delete_group(request, group_id):
     return redirect('dashboard')
 
 
+@login_required
+def group_details(request, group_id):
+    group = Group.objects.get(id=group_id)
+    members = Integrante.objects.filter(group=group)
+    
+    return render(request, 'group_details.html', {
+        'group': group,
+        'members': members
+    })
 
 
+# entrar a un grupo
 
-# agregar a un grupo
+# eliminar miembro de un grupo
 
-# eliminar de un grupo
+# salir de un grupo
 
 # hacer formulario de belbin

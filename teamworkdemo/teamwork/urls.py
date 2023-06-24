@@ -15,5 +15,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('create/', views.create_group, name='create'),
-    path('delete/<int:group_id>', views.delete_group, name='delete')
+    path('delete/<int:group_id>', views.delete_group, name='delete'),
+    path('details/<int:group_id>', views.group_details, name='details')
 ]
