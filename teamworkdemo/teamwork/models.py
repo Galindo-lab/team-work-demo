@@ -23,13 +23,17 @@ class Group(models.Model):
 
     admin = models.ForeignKey(
         User,
-        related_name='group_admin',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='group_admin'
     )
 
     class Meta:
-        # un cada miembro puede tener un equipo con el nombre que quiera
-        unique_together = (('name', 'admin'),)
+        # permite que haya nombre repetidos mientras 
+        # el administrador no sea el mismo
+        
+        unique_together = (
+            ('name', 'admin'),
+        )
 
 
 class Integrante(models.Model):
