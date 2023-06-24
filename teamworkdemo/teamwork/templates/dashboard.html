@@ -17,7 +17,10 @@
 
         <ul>
             {% for group in user_groups %}
-                <li><a href="#"> {{ group.name }} </a></li>
+                <li>
+                    <a href="#"> {{ group.name }} </a> -
+                    [<a href="{% url 'delete' group.id %}">Delete</a>]
+                </li>
             {% endfor %}
         </ul>
     </div>
@@ -25,7 +28,7 @@
     <div>
         <h2>Acciones</h2>
         <ul>
-            <li><a href="{% url 'create_group' %}">Crear grupo</a></li>
+            <li><a href="{% url 'create' %}">Crear grupo</a></li>
             <li><a href="{% url 'logout' %}" type="submit">logout</a> </li>
         </ul>
     </div>

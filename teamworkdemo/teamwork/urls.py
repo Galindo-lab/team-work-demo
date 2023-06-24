@@ -14,5 +14,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('register/', views.register, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('create_group/', views.create_group, name='create_group')
+    path('create/', views.create_group, name='create'),
+    path('delete/<int:group_id>', views.delete_group, name='delete')
 ]

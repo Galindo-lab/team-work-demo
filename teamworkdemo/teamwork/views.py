@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from . models import Group
-from . forms import UserRegisterForm, CreateGroupForm
+
+from . forms import\
+      UserRegisterForm, CreateGroupForm
 
 
 def home(request):
@@ -13,7 +15,7 @@ def home(request):
 
 def register(request):
     if request.method != 'POST':
-        # mandar el formulario vacio, comportamiento default
+        # mandar el formulario vacio
         return render(request, 'register.html', {
             'form': UserRegisterForm()
         })
@@ -36,7 +38,7 @@ def register(request):
 @login_required
 def dashboard(request):
     user = User.objects.get(
-        username = request.user.username
+        username=request.user.username
     )
 
     # grupos creados por el usuario
@@ -68,12 +70,14 @@ def create_group(request):
         })
 
     # verificar que el nombre sea unico
+    # https://stackoverflow.com/a/30049925/22015904
     group = Group.objects.filter(
-        name = form.cleaned_data['name'],
-        admin = request.user
+        name=form.cleaned_data['name'],
+        admin=request.user
     )
 
     if group.exists():
+        # https://stackoverflow.com/a/60258267/22015904
         form.add_error('name', 'Ya existe ese registro')
 
         return render(request, 'create_group.html', {
@@ -81,13 +85,23 @@ def create_group(request):
         })
 
     # guardar el registro
+    # https://stackoverflow.com/a/12848678/22015904
     group_register = form.save(commit=False)
     group_register.admin = request.user
     group_register.save()
 
     return redirect('dashboard')
 
-# elimiar grupos
+
+@login_required
+def delete_group(request, group_id):
+    post = Group.objects.get(id=group_id)
+    post.delete()
+    return redirect('dashboard')
+
+
+
+
 
 # agregar a un grupo
 
