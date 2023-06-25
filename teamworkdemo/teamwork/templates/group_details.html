@@ -2,6 +2,8 @@
 {% block content %}
     <h1>Informacion de {{ group.name }} </h1>
 
+    <a href="{% url 'invitation' group.admin group.name %}"> Invitacion </a>
+
     <h2>Integrantes</h2>
     <ul>
         {% for Integrante in members %}

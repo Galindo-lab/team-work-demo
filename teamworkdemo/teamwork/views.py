@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from . models import Group, Integrante
+from . models import Group, Integrante, Member
 from . forms import UserRegisterForm, CreateGroupForm
 
 
@@ -44,7 +45,7 @@ def dashboard(request):
     # grupos a los que el usuario pertenece
     user_member = user.group_member.all()
 
-    return render(request, 'dashboard.html', context={
+    return render(request, 'dashboard.html', {
         'user_groups': user_groups,
         'user_member': user_member
     })
@@ -101,14 +102,54 @@ def delete_group(request, group_id):
 def group_details(request, group_id):
     group = Group.objects.get(id=group_id)
     members = Integrante.objects.filter(group=group)
-    
+
     return render(request, 'group_details.html', {
         'group': group,
         'members': members
     })
 
 
-# entrar a un grupo
+@login_required
+def join_group(request,  username, group_name):
+    # TODO: join_group
+    pass
+
+
+@login_required
+def invitation_request(request, username, group_name):
+    user = get_list_or_404(User, username=username)
+
+    return HttpResponse(user)
+
+    # user = User.objects.filter(
+    #     username=username
+    # )
+
+    # if not user.exists():
+    #     # TODO: agregar una pantalla de error
+    #     return HttpResponse('Invitacion invalida')
+    
+    # member = Member.objects.filter(
+    #     user=user
+    # )
+
+    # if not member.exists():
+    #     # TODO: agregar una pantalla de error
+    #     return HttpResponse('Invitacion invalida 2')
+
+    # group = Group.objects.filter(
+    #     name=group_name,
+    #     admin=user
+    # ).first()
+
+
+    # return HttpResponse(group.exists())
+
+    # return render(request, 'join_group.html', {
+    #     'group': group,
+    #     'is_member': member2.exists()
+    # })
+
 
 # eliminar miembro de un grupo
 
