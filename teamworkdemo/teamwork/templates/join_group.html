@@ -2,6 +2,14 @@
 {% block content %}
     <h1>Unirme al grupo {{ group.name }} </h1>
 
-    
+    {% if request.user.is_authenticated %}
+        {% if integrante.exist %}
+            Ya eres miembro del equipo
+        {% else %}
+            Todavia no eres miembro del equipo
+        {% endif %}
+    {% else %}
+        Debes iniciar sesion o crear una cuenta
+    {% endif %}
 
 {% endblock content %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -109,46 +109,26 @@ def group_details(request, group_id):
     })
 
 
+def invitation_request(request, username, group_name):
+    # https://stackoverflow.com/a/44386827/22015904
+    user = get_object_or_404(User, username=username)
+    group = get_object_or_404(Group, name=group_name, admin=user)
+
+    integrante = Integrante.objects.filter(
+        member = user,
+        group = group
+    )
+
+    return render(request, 'join_group.html', {
+        'group': group,
+        'integrante': integrante
+    })
+
+
 @login_required
 def join_group(request,  username, group_name):
     # TODO: join_group
     pass
-
-
-@login_required
-def invitation_request(request, username, group_name):
-    user = get_list_or_404(User, username=username)
-
-    return HttpResponse(user)
-
-    # user = User.objects.filter(
-    #     username=username
-    # )
-
-    # if not user.exists():
-    #     # TODO: agregar una pantalla de error
-    #     return HttpResponse('Invitacion invalida')
-    
-    # member = Member.objects.filter(
-    #     user=user
-    # )
-
-    # if not member.exists():
-    #     # TODO: agregar una pantalla de error
-    #     return HttpResponse('Invitacion invalida 2')
-
-    # group = Group.objects.filter(
-    #     name=group_name,
-    #     admin=user
-    # ).first()
-
-
-    # return HttpResponse(group.exists())
-
-    # return render(request, 'join_group.html', {
-    #     'group': group,
-    #     'is_member': member2.exists()
-    # })
 
 
 # eliminar miembro de un grupo
