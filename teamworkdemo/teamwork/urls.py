@@ -19,5 +19,5 @@ urlpatterns = [
     path('details/<int:group_id>', views.group_details, name='details'),
     path('invitation/<str:username>/<str:group_name>',
          views.invitation_request, name='invitation'),
-    path('jpin/<str:username>/<str:group_name>',views.join_group, name='join')
+    path('join/<str:username>/<str:group_name>',views.join_group, name='join')
 ]

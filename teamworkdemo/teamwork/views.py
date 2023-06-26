@@ -114,11 +114,18 @@ def invitation_request(request, username, group_name):
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
+    if not request.user.is_authenticated:
+        # mostrar la pantalla con el mensajede iniciar sesion
+        return render(request, 'join_group.html', {
+            'group': group
+        })
+
     integrante = Integrante.objects.filter(
         member = request.user,
         group = group
     )
 
+    # mostrar el estado 
     return render(request, 'join_group.html', {
         'group': group,
         'integrante': integrante
@@ -137,10 +144,14 @@ def join_group(request,  username, group_name):
 
     integrante.save()
 
+    # TODO: Rediregir al formulario de Belbin
     return redirect('dashboard')
 
 
-# eliminar miembro de un grupo
+@login_required
+def remove_member(request, member_id):
+    pass
+
 
 # salir de un grupo
 
