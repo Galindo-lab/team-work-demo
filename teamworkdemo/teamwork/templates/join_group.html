@@ -3,13 +3,15 @@
     <h1>Unirme al grupo {{ group.name }} </h1>
 
     {% if request.user.is_authenticated %}
-        {% if integrante.exist %}
+        {% if integrante.exists %}
             Ya eres miembro del equipo
         {% else %}
-            Todavia no eres miembro del equipo
+            <a href="{% url 'join' user group.name %}">
+                Unirse
+            </a>
         {% endif %}
     {% else %}
-        Debes iniciar sesion o crear una cuenta
+        Debes <a href="{% url 'login' %}">iniciar sesion</a> o crear una cuenta
     {% endif %}
 
 {% endblock content %}

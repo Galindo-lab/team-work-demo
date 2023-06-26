@@ -115,7 +115,7 @@ def invitation_request(request, username, group_name):
     group = get_object_or_404(Group, name=group_name, admin=user)
 
     integrante = Integrante.objects.filter(
-        member = user,
+        member = request.user,
         group = group
     )
 
@@ -127,8 +127,17 @@ def invitation_request(request, username, group_name):
 
 @login_required
 def join_group(request,  username, group_name):
-    # TODO: join_group
-    pass
+    user = get_object_or_404(User, username=username)
+    group = get_object_or_404(Group, name=group_name, admin=user)
+
+    integrante = Integrante(
+        member = user,
+        group = group
+    )
+
+    integrante.save()
+
+    return redirect('dashboard')
 
 
 # eliminar miembro de un grupo
