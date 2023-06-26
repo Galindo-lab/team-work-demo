@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_list_or_404, get_object_or_40
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+
 from . models import Group, Integrante, Member
-from . forms import UserRegisterForm, CreateGroupForm
+from . forms import UserRegisterForm, CreateGroupForm, BelbinForm
 
 
 def home(request):
@@ -160,4 +161,14 @@ def remove_member(request, integrante_id):
     return redirect('dashboard')
 
 
-# hacer formulario de belbin
+@login_required
+def belbin_form(request, username, group_name):
+    user = get_object_or_404(User, username=username)
+    group = get_object_or_404(Group, name=group_name, admin=user)
+
+    if request.method != 'POST':
+        return render(request, 'form.html', {
+            'form': BelbinForm()
+        })
+
+    return HttpResponse("Nada")
