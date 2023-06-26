@@ -100,6 +100,8 @@ def delete_group(request, group_id):
 
 @login_required
 def group_details(request, group_id):
+    # TODO: cambiar el 'group_id' con 'group_name'
+
     group = Group.objects.get(id=group_id)
     members = Integrante.objects.filter(group=group)
 
@@ -110,22 +112,24 @@ def group_details(request, group_id):
 
 
 def invitation_request(request, username, group_name):
+    # TODO: Agregar contraseña para los formularios
+
     # https://stackoverflow.com/a/44386827/22015904
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
     if not request.user.is_authenticated:
-        # mostrar la pantalla con el mensajede iniciar sesion
+        # mostrar la pantalla con el mensaje de iniciar sesion
         return render(request, 'join_group.html', {
             'group': group
         })
 
     integrante = Integrante.objects.filter(
-        member = request.user,
-        group = group
+        member=request.user,
+        group=group
     )
 
-    # mostrar el estado 
+    # mostrar el estado
     return render(request, 'join_group.html', {
         'group': group,
         'integrante': integrante
@@ -138,8 +142,8 @@ def join_group(request,  username, group_name):
     group = get_object_or_404(Group, name=group_name, admin=user)
 
     integrante = Integrante(
-        member = user,
-        group = group
+        member=user,
+        group=group
     )
 
     integrante.save()
@@ -149,10 +153,11 @@ def join_group(request,  username, group_name):
 
 
 @login_required
-def remove_member(request, member_id):
-    pass
+def remove_member(request, integrante_id):
+    member = Integrante.objects.get(id=integrante_id)
 
+    member.delete()
+    return redirect('dashboard')
 
-# salir de un grupo
 
 # hacer formulario de belbin

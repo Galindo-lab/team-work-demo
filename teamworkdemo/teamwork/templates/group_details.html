@@ -10,7 +10,7 @@
     <ul>
         {% for Integrante in members %}
             <li>
-               {{ Integrante.member }}
+               {{ Integrante.member }} - <a href="{% url 'remove' Integrante.id %}">Eliminar</a>
             </li>
         {% endfor %}
     </ul>

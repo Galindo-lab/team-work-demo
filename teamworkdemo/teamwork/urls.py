@@ -17,7 +17,8 @@ urlpatterns = [
     path('create/', views.create_group, name='create'),
     path('delete/<int:group_id>', views.delete_group, name='delete'),
     path('details/<int:group_id>', views.group_details, name='details'),
-    path('invitation/<str:username>/<str:group_name>',
-         views.invitation_request, name='invitation'),
-    path('join/<str:username>/<str:group_name>',views.join_group, name='join')
+    path('invitation/<str:username>/<str:group_name>', views.invitation_request, name='invitation'),
+    path('join/<str:username>/<str:group_name>', views.join_group, name='join'),
+    path('remove/<int:integrante_id>', views.remove_member, name='remove')
+
 ]
