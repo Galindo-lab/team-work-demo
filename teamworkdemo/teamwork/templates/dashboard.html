@@ -18,8 +18,7 @@
         <ul>
             {% for group in user_groups %}
                 <li>
-                    <a href="{% url 'details' group.id %}"> {{ group.name }} </a> -
-                    [<a href="{% url 'delete' group.id %}">Delete</a>]
+                    <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
                 </li>
             {% endfor %}
         </ul>
