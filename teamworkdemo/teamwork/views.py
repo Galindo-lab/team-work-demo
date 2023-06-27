@@ -160,7 +160,6 @@ def join_group(request,  username, group_name):
 @login_required
 def remove_member(request, integrante_id):
     member = Integrante.objects.get(id=integrante_id)
-
     member.delete()
     return redirect('dashboard')
 
@@ -170,16 +169,11 @@ def belbin_form(request, username, group_name):
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
-    integrante = Integrante.objects.filter(
-        member=request.user,
+    integrante = get_object_or_404(
+        Integrante, 
+        member=request.user, 
         group=group
     )
-
-    if not integrante.exists():
-        print('ac')
-        # Si quiere entrar al formulario pero no es integrante del grupo
-        # TODO: Mejor pantallade error
-        return HttpResponseNotFound("No eres miembro del equipo")
 
     belbin_form = BelbinUserProfile.objects.filter(
         integrante=integrante
@@ -192,8 +186,6 @@ def belbin_form(request, username, group_name):
             'integrante': integrante,
             'belbin_form': belbin_form
         })
-
-
 
     # form = CreateGroupForm(request.POST)
 
