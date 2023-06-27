@@ -11,8 +11,11 @@
             </a>
 
         {% else %}
-
-            Ya eres miembro
+            
+            Resolver el 
+            <a href="{% url 'form' user group.name %}">
+                formulario
+            </a>
 
         {% endif %}
 

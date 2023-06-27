@@ -1,9 +1,13 @@
-from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from . models import Group, Integrante, Member
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.shortcuts import get_list_or_404
+from django.shortcuts import get_object_or_404
+
+from . models import Group, Integrante, Member, BelbinUserProfile
 from . forms import UserRegisterForm, CreateGroupForm, BelbinForm
 
 
@@ -166,9 +170,31 @@ def belbin_form(request, username, group_name):
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
+    integrante = Integrante.objects.filter(
+        member=request.user,
+        group=group
+    )
+
+    if not integrante.exists():
+        # Si quiere entrar al formulario pero no es integrante del grupo
+        # TODO: Mejor pantallade error
+        return HttpResponseNotFound("No eres miembro del equipo")
+
+    belbin_form = BelbinUserProfile.objects.filter(
+        integrante = integrante
+    )
+
     if request.method != 'POST':
+        # Mandar formulario vacio
         return render(request, 'form.html', {
-            'form': BelbinForm()
+            'form': BelbinForm(),
+            'integrante': integrante
         })
+
+    # form = CreateGroupForm(request.POST)
+
+    # group_register = form.save(commit=False)
+    # group_register.admin = request.user
+    # group_register.save()
 
     return HttpResponse("Nada")
