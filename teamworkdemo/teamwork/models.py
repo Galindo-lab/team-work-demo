@@ -2,10 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-
+# TODO: Buscar un nombre más descriptivo
 class Member(models.Model):
     """
-    personas que pueden crear formularios y resolverlos
+    Esta clase permite agregar informacion adicional de los usuarios
+    permite extender los perfiles sin modificar User
     """
     user = models.OneToOneField(
         User,
@@ -35,7 +36,7 @@ class Group(models.Model):
             ('name', 'admin'),
         )
 
-
+# TODO: Buscar nu mejor nombre para esta clase
 class Integrante(models.Model):
     """
     Relaciona los miembros con los grupos 
@@ -64,14 +65,9 @@ class BelbinUserProfile(models.Model):
     formularios realizados
     """
 
-    auth_user_id = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE
-    )
 
-    group_id = models.ForeignKey(
-        Group,
-        related_name='emited_by',
+    integrante = models.OneToOneField(
+        Integrante,
         on_delete=models.CASCADE
     )
 
@@ -80,15 +76,15 @@ class BelbinUserProfile(models.Model):
     )
 
     # perfiles de belbin
-    resource_investigator = models.IntegerField()
-    team_worker = models.IntegerField()
-    coordinator = models.IntegerField()
-    plant = models.IntegerField()
-    monitor_evaluator = models.IntegerField()
-    specialist = models.IntegerField()
-    shaper = models.IntegerField()
-    implementer = models.IntegerField()
-    completer_finisher = models.IntegerField()
+    resource_investigator = models.IntegerField(default=0)
+    team_worker = models.IntegerField(default=0)
+    coordinator = models.IntegerField(default=0)
+    plant = models.IntegerField(default=0)
+    monitor_evaluator = models.IntegerField(default=0)
+    specialist = models.IntegerField(default=0)
+    shaper = models.IntegerField(default=0)
+    implementer = models.IntegerField(default=0)
+    completer_finisher = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['-timestamp']
