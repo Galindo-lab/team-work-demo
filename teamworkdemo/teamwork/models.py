@@ -65,7 +65,6 @@ class BelbinUserProfile(models.Model):
     formularios realizados
     """
 
-
     integrante = models.OneToOneField(
         Integrante,
         on_delete=models.CASCADE

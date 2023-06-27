@@ -187,10 +187,19 @@ def belbin_form(request, username, group_name):
             'belbin_form': belbin_form
         })
 
-    # form = CreateGroupForm(request.POST)
 
-    # group_register = form.save(commit=False)
-    # group_register.admin = request.user
-    # group_register.save()
+    form = BelbinForm(request.POST)
 
-    return HttpResponse("Nada")
+    if not form.is_valid():
+        # si el formulario es invalido mostrar error 
+        return render(request, 'form.html', {
+            'form': form,
+            'integrante': integrante,
+            'belbin_form': belbin_form
+        })
+
+    form_save = form.save(commit=False)
+    form_save.integrante = integrante
+    form_save.save()
+
+    return redirect('dashboard')

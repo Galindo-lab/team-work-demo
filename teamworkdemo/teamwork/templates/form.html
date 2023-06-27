@@ -2,7 +2,16 @@
 {% block content %}
 
     {% if not belbin_form.exists %}
-        {{ form }}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form }}
+
+            <button>Log in</button>
+        </form>
+
+        
     {% else %}
         Ya haz resuelto este formulario...
     {% endif %}
