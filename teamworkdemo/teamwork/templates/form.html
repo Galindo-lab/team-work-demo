@@ -1,6 +1,10 @@
 
 {% block content %}
 
-    {{ form }}
+    {% if not belbin_form.exists %}
+        {{ form }}
+    {% else %}
+        Ya haz resuelto este formulario...
+    {% endif %}
 
 {% endblock content %}

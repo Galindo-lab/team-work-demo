@@ -176,20 +176,24 @@ def belbin_form(request, username, group_name):
     )
 
     if not integrante.exists():
+        print('ac')
         # Si quiere entrar al formulario pero no es integrante del grupo
         # TODO: Mejor pantallade error
         return HttpResponseNotFound("No eres miembro del equipo")
 
     belbin_form = BelbinUserProfile.objects.filter(
-        integrante = integrante
+        integrante=integrante
     )
 
     if request.method != 'POST':
         # Mandar formulario vacio
         return render(request, 'form.html', {
             'form': BelbinForm(),
-            'integrante': integrante
+            'integrante': integrante,
+            'belbin_form': belbin_form
         })
+
+
 
     # form = CreateGroupForm(request.POST)
 
