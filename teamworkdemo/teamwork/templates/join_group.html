@@ -1,7 +1,11 @@
 
 {% block content %}
-    <h1>Unirme al grupo {{ group.name }} </h1>
+    <h1>Invitacion al grupo {{ group.name }} </h1>
 
+    {{ group.admin }} te ha invitado al grupo {{ group.name }}. <br>
+    puedes compartir esta URL para invitar a los miembros del equipo
+
+    <h2>Acciones</h2>
     {% if request.user.is_authenticated %}
 
         {% if not integrante.exists %}
