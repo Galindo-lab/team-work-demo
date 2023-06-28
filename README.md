@@ -22,3 +22,10 @@ python manage.py migrate
 ```shell
 python manage.py runserver
 ```
+
+
+<!-- 
+## Informacion adicional
+https://www.belbin.es/roles-de-equipo/
+https://www.belbin.com/about/belbin-team-roles
+-->
