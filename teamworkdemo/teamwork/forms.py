@@ -5,6 +5,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 from .models import Profile, Group, BelbinUserProfile
 
+import json
+
 
 class UserRegisterForm(UserCreationForm):
     # la plantilla es "register.html"
