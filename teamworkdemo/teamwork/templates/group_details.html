@@ -2,17 +2,31 @@
 {% block content %}
     <h1>Informacion de {{ group.name }} </h1>
 
-    <a href="{% url 'invitation' group.admin group.name %}"> [Invitacion] </a>
-
-    [<a href="{% url 'delete' group.id %}">Delete</a>]
-
     <h2>Integrantes</h2>
     <ul>
         {% for Integrante in members %}
             <li>
-               {{ Integrante.member }} - <a href="{% url 'remove' Integrante.id %}">Eliminar</a>
+               {{ Integrante.member }} - <a href="{% url 'remove' Integrante.id %}">Expulsar</a>
             </li>
         {% endfor %}
     </ul>
+
+
+    <div>
+        <h2>Acciones</h2>
+        <ul>
+            <li>
+                <a href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
+            </li>
+
+            <li>
+                <a href="{% url 'delete' group.id %}">Elimar grupo</a>
+            </li>
+
+            <li>
+                <a href="{% url 'invitation' group.admin group.name %}">Resolver el formulario</a>
+            </li>
+        </ul>
+    </div>
 
 {% endblock content %}
