@@ -195,7 +195,7 @@ def belbin_form(request, username, group_name):
             'belbin_form': belbin_form
         })
 
-
+    # capturar el formulario
     form = BelbinForm(request.POST)
 
     if not form.is_valid():
