@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Member, Group, Integrante, BelbinUserProfile
+from .models import Profile, Group, Member, BelbinUserProfile
 
-admin.site.register(Member)
+admin.site.register(Profile)
 admin.site.register(Group)
-admin.site.register(Integrante)
+admin.site.register(Member)
 admin.site.register(BelbinUserProfile)

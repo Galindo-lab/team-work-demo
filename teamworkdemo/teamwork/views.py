@@ -1,4 +1,6 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -7,8 +9,14 @@ from django.shortcuts import redirect
 from django.shortcuts import get_list_or_404
 from django.shortcuts import get_object_or_404
 
-from . models import Group, Integrante, Member, BelbinUserProfile
-from . forms import UserRegisterForm, CreateGroupForm, BelbinForm
+from . models import Group
+from . models import Member
+from . models import Profile
+from . models import BelbinUserProfile
+
+from . forms import UserRegisterForm
+from . forms import CreateGroupForm
+from . forms import BelbinForm
 
 
 def home(request):
@@ -108,7 +116,7 @@ def group_details(request, group_id):
     # TODO: cambiar el 'group_id' con 'group_name'
 
     group = Group.objects.get(id=group_id)
-    members = Integrante.objects.filter(group=group)
+    members = Member.objects.filter(group=group)
 
     return render(request, 'group_details.html', {
         'group': group,
@@ -129,7 +137,7 @@ def invitation_request(request, username, group_name):
             'group': group
         })
 
-    integrante = Integrante.objects.filter(
+    integrante = Member.objects.filter(
         member=request.user,
         group=group
     )
@@ -146,7 +154,7 @@ def join_group(request,  username, group_name):
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
-    integrante = Integrante(
+    integrante = Member(
         member=user,
         group=group
     )
@@ -159,7 +167,7 @@ def join_group(request,  username, group_name):
 
 @login_required
 def remove_member(request, integrante_id):
-    member = Integrante.objects.get(id=integrante_id)
+    member = Member.objects.get(id=integrante_id)
     member.delete()
     return redirect('dashboard')
 
@@ -170,7 +178,7 @@ def belbin_form(request, username, group_name):
     group = get_object_or_404(Group, name=group_name, admin=user)
 
     integrante = get_object_or_404(
-        Integrante, 
+        Member, 
         member=request.user, 
         group=group
     )
@@ -197,7 +205,8 @@ def belbin_form(request, username, group_name):
             'integrante': integrante,
             'belbin_form': belbin_form
         })
-
+    
+    # guardar el formulario
     form_save = form.save(commit=False)
     form_save.integrante = integrante
     form_save.save()

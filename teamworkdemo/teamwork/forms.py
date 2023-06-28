@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from .models import Member, Group, BelbinUserProfile
+from .models import Profile, Group, BelbinUserProfile
 
 
 class UserRegisterForm(UserCreationForm):

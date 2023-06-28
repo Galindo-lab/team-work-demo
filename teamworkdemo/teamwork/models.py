@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 # TODO: Buscar un nombre más descriptivo
-class Member(models.Model):
+class Profile(models.Model):
     """
     Esta clase permite agregar informacion adicional de los usuarios
     permite extender los perfiles sin modificar User
@@ -37,7 +37,7 @@ class Group(models.Model):
         )
 
 # TODO: Buscar nu mejor nombre para esta clase
-class Integrante(models.Model):
+class Member(models.Model):
     """
     Relaciona los miembros con los grupos 
     """
@@ -66,7 +66,7 @@ class BelbinUserProfile(models.Model):
     """
 
     integrante = models.OneToOneField(
-        Integrante,
+        Member,
         on_delete=models.CASCADE
     )
 
