@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-# TODO: Buscar un nombre más descriptivo
+
 class Profile(models.Model):
     """
     Esta clase permite agregar informacion adicional de los usuarios
@@ -16,7 +16,7 @@ class Profile(models.Model):
 
 class Group(models.Model):
     """
-    grupos a lo que pertenecen los miembros
+    Modelo para representar un grupo al que se puede integrar un miembro
     """
     name = models.CharField(
         max_length=200
@@ -29,14 +29,14 @@ class Group(models.Model):
     )
 
     class Meta:
-        # permite que haya nombre repetidos mientras 
-        # el administrador no sea el mismo
-        
+        # permite que haya nombre repetidos mientras el administrador 
+        # no sea el mismo
+
         unique_together = (
             ('name', 'admin'),
         )
 
-# TODO: Buscar nu mejor nombre para esta clase
+
 class Member(models.Model):
     """
     Relaciona los miembros con los grupos 
