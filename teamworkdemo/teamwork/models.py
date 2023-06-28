@@ -76,7 +76,7 @@ class BelbinUserProfile(models.Model):
 
     # perfiles de belbin
     resource_investigator = models.IntegerField(default=0)
-    teamworker = models.IntegerField(default=0)
+    team_worker = models.IntegerField(default=0)
     coordinator = models.IntegerField(default=0)
     plant = models.IntegerField(default=0)
     monitor_evaluator = models.IntegerField(default=0)
