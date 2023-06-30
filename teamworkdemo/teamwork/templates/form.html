@@ -16,7 +16,7 @@
     {% block content %}
     
     {% if not belbin_form.exists %}
-{% comment %} action="{% url 'form' integrante.group.admin integrante.group.name %}"  {% endcomment %}
+
     <form id="myForm" method="post">
         {% csrf_token %}
 
@@ -55,11 +55,24 @@
         document.getElementById("myForm").addEventListener("submit", function(event) {
             event.preventDefault();
           
-            var form = event.target;
-            var formData = new FormData(form);
+            //var form = event.target;
+            //var formData = new FormData(form);
+            //console.log(formData["specialist"])
           
+            var formData = new FormData();
+            formData.append('resource_investigator', 0);
+            formData.append('team_worker', 0);
+            formData.append('coordinator', 0);
+            formData.append('plant', 0);
+            formData.append('monitor_evaluator', 0);
+            formData.append('specialist', 0);
+            formData.append('shaper', 0);
+            formData.append('implementer', 0);
+            formData.append('completer_finisher', 0);
+
+
             // Obtén el valor del token CSRF del formulario
-            var csrfToken = form.elements.csrfmiddlewaretoken.value;
+            var csrfToken = event.target.elements.csrfmiddlewaretoken.value;
           
             // Agrega el token CSRF a la cabecera de la solicitud
             var headers = {
@@ -67,7 +80,7 @@
             };
 
           
-            fetch(form.action, {
+            fetch(event.target.action, {
               method: 'POST',
               body: formData,
               headers: headers
@@ -76,7 +89,7 @@
               // Maneja la respuesta del servidor
               if (response.ok) {
                 console.log("Solicitud POST exitosa");
-                location.reload()
+                //location.reload()
               } else {
                 console.error("Error en la solicitud POST");
               }
