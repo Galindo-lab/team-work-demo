@@ -1,5 +1,4 @@
 
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -10,101 +9,118 @@
     <title>Document</title>
 
     <script src="{% static 'scripts/vue/vue.js' %}"></script>
+    {% comment %} <script src="{% static 'data/belbin_data.json' %}"></script> {% endcomment %}
 </head>
 <body>
-
     {% block content %}
-    
-    {% if not belbin_form.exists %}
 
-    <form id="myForm" method="post">
-        {% csrf_token %}
+        {% if not belbin_form.exists %}
+            <div id="app">
+                <h1>Formulario de reparto de puntos</h1>
 
-        <!-- Campos de perfiles de Belbin -->
-        <label for="resource_investigator">Resource Investigator:</label>
-        <input type="number" name="resource_investigator" value="0"><br>
-      
-        <label for="team_worker">Team Worker:</label>
-        <input type="number" name="team_worker" value="0"><br>
-      
-        <label for="coordinator">Coordinator:</label>
-        <input type="number" name="coordinator" value="0"><br>
-      
-        <label for="plant">Plant:</label>
-        <input type="number" name="plant" value="0"><br>
-      
-        <label for="monitor_evaluator">Monitor Evaluator:</label>
-        <input type="number" name="monitor_evaluator" value="0"><br>
-      
-        <label for="specialist">Specialist:</label>
-        <input type="number" name="specialist" value="0"><br>
-      
-        <label for="shaper">Shaper:</label>
-        <input type="number" name="shaper" value="0"><br>
-      
-        <label for="implementer">Implementer:</label>
-        <input type="number" name="implementer" value="0"><br>
-      
-        <label for="completer_finisher">Completer Finisher:</label>
-        <input type="number" name="completer_finisher" value="0"><br>
-      
-        <button type="submit">Enviar</button>
-      </form>
+                <form @submit.prevent="submitForm">
+                    {% csrf_token %}
+                        
+                    <div v-for="(section, index) in sections" :key="index">
 
-      <script>
-        document.getElementById("myForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-          
-            //var form = event.target;
-            //var formData = new FormData(form);
-            //console.log(formData["specialist"])
-          
-            var formData = new FormData();
-            formData.append('resource_investigator', 0);
-            formData.append('team_worker', 0);
-            formData.append('coordinator', 0);
-            formData.append('plant', 0);
-            formData.append('monitor_evaluator', 0);
-            formData.append('specialist', 0);
-            formData.append('shaper', 0);
-            formData.append('implementer', 0);
-            formData.append('completer_finisher', 0);
+                        <h2>[[ section.title ]]</h2>
+                        <p>Puntos restantes: [[ section.remainingPoints ]]</p>
 
+                        <div v-for="(question, questionIndex) in section.questions" :key="questionIndex">
+                        <label>[[ question.label ]]</label>
+                        <input type="number" v-model="question.points" min="0" max="10">
+                        </div>
+                        
+                    </div>
+                
+                    <button type="submit">Enviar</button>
+                </form>
 
-            // Obtén el valor del token CSRF del formulario
-            var csrfToken = event.target.elements.csrfmiddlewaretoken.value;
-          
-            // Agrega el token CSRF a la cabecera de la solicitud
-            var headers = {
-              'X-CSRFToken': csrfToken
-            };
+               
+            </div>
 
-          
-            fetch(event.target.action, {
-              method: 'POST',
-              body: formData,
-              headers: headers
-            })
-            .then(function(response) {
-              // Maneja la respuesta del servidor
-              if (response.ok) {
-                console.log("Solicitud POST exitosa");
-                //location.reload()
-              } else {
-                console.error("Error en la solicitud POST");
-              }
-            })
-            .catch(function(error) {
-              console.error("Error en la solicitud POST:", error);
-            });
-          });
-      </script>
+            <script>
+                const csrfToken = '{{ csrf_token }}';
 
-    {% else %}
-        Ya haz resuelto este formulario...
-    {% endif %}
+                const data = {
+                    name: 'John Doe',
+                    age: 25,
+                };
+                  
+
+                new Vue({
+                delimiters: ['[[', ']]'],
+                  el: '#app',
+                  data: {
+                    sections: [
+                      {
+                        title: 'Sección 1',
+                        questions: [
+                          { label: 'Pregunta 1', points: 0 },
+                          { label: 'Pregunta 2', points: 0 },
+                          { label: 'Pregunta 3', points: 0 },
+                          { label: 'Pregunta 4', points: 0 },
+                          { label: 'Pregunta 5', points: 0 },
+                          { label: 'Pregunta 6', points: 0 },
+                          { label: 'Pregunta 7', points: 0 },
+                          { label: 'Pregunta 8', points: 0 },
+                          { label: 'Pregunta 9', points: 0 }
+                        ],
+                        remainingPoints: 10,
+                        totalPoints: 0
+                      },
+                    ]
+                  },
+                  methods: {
+                    submitForm() {
+                      // Validar que la suma de los puntos sea igual a 10 en cada sección
+                      for (const section of this.sections) {
+                        const sectionPoints = section.questions.reduce((sum, question) => sum + parseInt(question.points), 0);
+            
+                        if (sectionPoints !== 10) {
+                          alert(`La suma de los puntos en la sección "${section.title}" debe ser igual a 10.`);
+                          return;
+                        }
+                      }
+            
+                      // Enviar los datos del formulario
+                      const formData = {
+                        sections: this.sections
+                      };
+            
+                      // Aquí puedes realizar una solicitud a tu backend (por ejemplo, enviar los datos a Django)
+                      console.log(formData);
+                    }
+                  },
+                  watch: {
+                    sections: {
+                      handler(newSections) {
+                        for (const section of newSections) {
+                          section.remainingPoints = 10 - section.questions.reduce((sum, question) => sum + parseInt(question.points), 0);
+                          section.totalPoints = section.questions.reduce((sum, question) => sum + parseInt(question.points), 0);
+                        }
+                      },
+                      deep: true
+                    }
+                  }
+                });
+              </script>
+
+            {% comment %} <form method="post">
+                {% csrf_token %}
+
+                {{ form }}
+
+                <button>Log in</button>
+            </form> {% endcomment %}
+
+            
+        {% else %}
+            Ya haz resuelto este formulario...
+        {% endif %}
 
     {% endblock content %}
 
 </body>
 </html>
+
