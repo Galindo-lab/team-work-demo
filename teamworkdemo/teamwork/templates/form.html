@@ -16,8 +16,8 @@
     {% block content %}
     
     {% if not belbin_form.exists %}
-
-    <form id="myForm" action="{% url 'form' integrante.group.admin integrante.group.name %}" method="post">
+{% comment %} action="{% url 'form' integrante.group.admin integrante.group.name %}"  {% endcomment %}
+    <form id="myForm" method="post">
         {% csrf_token %}
 
         <!-- Campos de perfiles de Belbin -->
@@ -65,10 +65,7 @@
             var headers = {
               'X-CSRFToken': csrfToken
             };
-          
-            // Si estás utilizando autenticación basada en tokens de Django, agrega el token de autenticación a la cabecera
-            var authToken = '...'; // Reemplaza con el token de autenticación del usuario
-            headers['Authorization'] = 'Token ' + authToken;
+
           
             fetch(form.action, {
               method: 'POST',
@@ -79,6 +76,7 @@
               // Maneja la respuesta del servidor
               if (response.ok) {
                 console.log("Solicitud POST exitosa");
+                location.reload()
               } else {
                 console.error("Error en la solicitud POST");
               }
