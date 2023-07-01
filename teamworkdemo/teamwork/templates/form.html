@@ -9,13 +9,49 @@
     <title>Document</title>
 
     <script src="{% static 'scripts/vue/vue.js' %}"></script>
-    {% comment %} <script src="{% static 'data/belbin_data.json' %}"></script> {% endcomment %}
 </head>
 <body>
     {% block content %}
 
-        {% if not belbin_form.exists %}
-            <div id="app">
+    {% if not belbin_form.exists %}
+
+      <form id="Belbin" @submit="submitForm">
+        {% comment %}
+          Formulario de belbin, el fomato con '[[]]' es de vue, se puede
+          revisar el formato de abajo para mas informacion   
+        {% endcomment %}
+        <div v-for="section in sections" :key="section.id">
+          <h3>[[ section.title ]]</h3>
+          <p>Puntos restantes: [[ section.totalPoints ]]</p>
+          <div v-for="question in section.questions" :key="question.id">
+            <label>[[ question.label ]]</label>
+            <input type="number" v-model.number="question.answer">
+          </div>
+        </div>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      {% comment %}
+        Aqui esta la lógica del formulario 
+      {% endcomment %}
+      <script src="{% static 'scripts/form/form.js' %}"></script>
+
+    {% else %}
+
+      Ya haz resuelto este formulario...
+
+    {% endif %}
+
+    {% endblock content %}
+
+</body>
+</html>
+
+
+
+
+            {% comment %} <div id="app">
                 <h1>Formulario de reparto de puntos</h1>
 
                 <form @submit.prevent="submitForm">
@@ -35,92 +71,5 @@
                 
                     <button type="submit">Enviar</button>
                 </form>
-
-               
-            </div>
-
-            <script>
-                const csrfToken = '{{ csrf_token }}';
-
-                const data = {
-                    name: 'John Doe',
-                    age: 25,
-                };
-                  
-
-                new Vue({
-                delimiters: ['[[', ']]'],
-                  el: '#app',
-                  data: {
-                    sections: [
-                      {
-                        title: 'Sección 1',
-                        questions: [
-                          { label: 'Pregunta 1', points: 0 },
-                          { label: 'Pregunta 2', points: 0 },
-                          { label: 'Pregunta 3', points: 0 },
-                          { label: 'Pregunta 4', points: 0 },
-                          { label: 'Pregunta 5', points: 0 },
-                          { label: 'Pregunta 6', points: 0 },
-                          { label: 'Pregunta 7', points: 0 },
-                          { label: 'Pregunta 8', points: 0 },
-                          { label: 'Pregunta 9', points: 0 }
-                        ],
-                        remainingPoints: 10,
-                        totalPoints: 0
-                      },
-                    ]
-                  },
-                  methods: {
-                    submitForm() {
-                      // Validar que la suma de los puntos sea igual a 10 en cada sección
-                      for (const section of this.sections) {
-                        const sectionPoints = section.questions.reduce((sum, question) => sum + parseInt(question.points), 0);
-            
-                        if (sectionPoints !== 10) {
-                          alert(`La suma de los puntos en la sección "${section.title}" debe ser igual a 10.`);
-                          return;
-                        }
-                      }
-            
-                      // Enviar los datos del formulario
-                      const formData = {
-                        sections: this.sections
-                      };
-            
-                      // Aquí puedes realizar una solicitud a tu backend (por ejemplo, enviar los datos a Django)
-                      console.log(formData);
-                    }
-                  },
-                  watch: {
-                    sections: {
-                      handler(newSections) {
-                        for (const section of newSections) {
-                          section.remainingPoints = 10 - section.questions.reduce((sum, question) => sum + parseInt(question.points), 0);
-                          section.totalPoints = section.questions.reduce((sum, question) => sum + parseInt(question.points), 0);
-                        }
-                      },
-                      deep: true
-                    }
-                  }
-                });
-              </script>
-
-            {% comment %} <form method="post">
-                {% csrf_token %}
-
-                {{ form }}
-
-                <button>Log in</button>
-            </form> {% endcomment %}
-
-            
-        {% else %}
-            Ya haz resuelto este formulario...
-        {% endif %}
-
-    {% endblock content %}
-
-</body>
-</html>
+            </div> {% endcomment %}
 
