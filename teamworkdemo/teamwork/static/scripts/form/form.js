@@ -5,27 +5,27 @@ new Vue({
     data: {
         sections: [
 
-// {
-//     title: "sección de ejemplo",   Titulo de la sección 
-//     availablePoints: 10,           Maximo numero de puntos para repartir
-//     points: 0,                     Numero de puntos repartidos
-//     questions: [
-//         {
-//             label: "pregunta 1",   Texto de la pregunta 
-//             points: 0,             Numero de puntos asignados
-//             for: "plant"           Perfil al que aportan los puntos:
-//                                     - resource_investigator
-//                                     - team_worker
-//                                     - coordinator
-//                                     - plant
-//                                     - monitor_evaluator
-//                                     - specialist
-//                                     - shaper
-//                                     - implementer
-//                                     - completer_finisher
-//         },
-//     ]
-// }, 
+            // {
+            // title: "sección de ejemplo",   Titulo de la sección 
+            // availablePoints: 10,           Maximo numero de puntos para repartir
+            // points: 0,                     Numero de puntos repartidos
+            // questions: [
+            // {
+            //   label: "pregunta 1",         Texto de la pregunta 
+            //   points: 0,                   Numero de puntos asignados
+            //   profile: "plant"             Perfil al que aportan los puntos:
+            //                                 - resource_investigator
+            //                                 - team_worker
+            //                                 - coordinator
+            //                                 - plant
+            //                                 - monitor_evaluator
+            //                                 - specialist
+            //                                 - shaper
+            //                                 - implementer
+            //                                 - completer_finisher
+            // },
+            // ]
+            // }, 
 
             {
                 title: "seccion 1",
@@ -34,7 +34,7 @@ new Vue({
                 questions: [
                     {
                         label: "pregunta 1",
-                        for: "plant",
+                        profile: "tonto",
                         points: 0,
                     },
                 ]
@@ -47,12 +47,12 @@ new Vue({
                 questions: [
                     {
                         label: "pregunta 1",
-                        for: "implementer",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
                         label: "pregunta 2",
-                        for: "completer_finisher",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                 ]
@@ -65,25 +65,80 @@ new Vue({
             // acciones cuando se presiona aceptar
             event.preventDefault();
 
-            for(const section of this.sections) {
+            for (const section of this.sections) {
                 if (section.points !== section.availablePoints) {
+                    // si la cantidad de puntos distribuidos es diferente
+                    // a los puntos disponibles, enviar un error 
                     alert("error en la seccion " + section.title)
                     return
                 }
             }
 
+            // obtener el elemento seleccionado
+            var form = event.target;
+
+            // extraer el csrf del formulario (para las peticiones a django)
+            var csrfToken = form.elements.csrfmiddlewaretoken.value;
+
+            // convertir el formulario al modelo del 'BelbinUserProfile'
+            var belbin = this.belbinProfile()
+
+            // fetchdata
             console.log("okidoky")
 
         },
-        
-        validSection(section) {
-            return section.availablePoints === section.points
+
+        belbinProfile() {
+            // convierte los resultados a un modelo 'BelbinUserProfile'
+            var formData = new FormData();
+
+            // agregar los perfiles al form agrega 
+            // redundiancia (la repeticion es aproposito)
+            formData.append('resource_investigator', 0);
+            formData.append('team_worker', 0);
+            formData.append('coordinator', 0);
+            formData.append('plant', 0);
+            formData.append('monitor_evaluator', 0);
+            formData.append('specialist', 0);
+            formData.append('shaper', 0);
+            formData.append('implementer', 0);
+            formData.append('completer_finisher', 0);
+
+            // lista de perfiles
+            const profiles = [
+                'resource_investigator',
+                'team_worker',
+                'coordinator',
+                'plant',
+                'monitor_evaluator',
+                'specialist',
+                'shaper',
+                'implementer',
+                'completer_finisher'
+            ]
+
+            for (const section of this.sections) {
+                for (const question of section.questions) {
+
+                    if (!profiles.includes(question.profile)) {
+                        // si el perfil no existe se omite
+                        console.log(`El perfil ${question.profile} no existe, se omitira su informacion`)
+                        continue
+                    }
+
+                    // incrementar los puntos 
+                    points = formData.get(question.profile) + question.points 
+                    formData.set(question.profile, profilePoints)
+                }
+            }
+
         }
     },
     watch: {
         sections: {
             handler(form) {
 
+                // actualizar los puntos en cada seccion 
                 for (const section of form) {
                     section.points = section.questions.reduce((sum, question) => {
                         return sum + parseInt(question.points);
