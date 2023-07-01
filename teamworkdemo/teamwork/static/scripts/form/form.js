@@ -3,11 +3,34 @@ new Vue({
     delimiters: ['[[', ']]'],
     el: '#Belbin',
     data: {
-        // Estructura del formulario
         sections: [
+
+// {
+//     title: "sección de ejemplo",   Titulo de la sección 
+//     availablePoints: 10,           Maximo numero de puntos para repartir
+//     points: 0,                     Numero de puntos repartidos
+//     questions: [
+//         {
+//             label: "pregunta 1",   Texto de la pregunta 
+//             points: 0,             Numero de puntos asignados a la pregunta
+//             for: "plant"           Perfil al que aportan los puntos:
+//                                     - resource_investigator
+//                                     - team_worker
+//                                     - coordinator
+//                                     - plant
+//                                     - monitor_evaluator
+//                                     - specialist
+//                                     - shaper
+//                                     - implementer
+//                                     - completer_finisher
+//         },
+//     ]
+// }, 
+
             {
                 title: "seccion 1",
-                totalPoints: 0,
+                availablePoints: 10,
+                points: 0,
                 questions: [
                     {
                         label: "pregunta 1",
@@ -16,9 +39,11 @@ new Vue({
                     },
                 ]
             },
+
             {
                 title: "seccion 2",
-                totalPoints: 0,
+                availablePoints: 10,
+                points: 0,
                 questions: [
                     {
                         label: "pregunta 1",
@@ -35,7 +60,7 @@ new Vue({
             // agregar las secciones faltantes...
         ]
     },
-    methods: {        
+    methods: {
         submitForm(event) {
             // acciones cuando se presiona aceptar
             event.preventDefault();
@@ -43,7 +68,18 @@ new Vue({
         }
     },
     watch: {
+        sections: {
+            handler(form) {
 
+                for (const section of form) {
+                    section.points = section.questions.reduce((sum, question) => {
+                        return sum + parseInt(question.points);
+                    }, 0);
+                }
+
+            },
+            deep: true
+        }
     }
 })
 

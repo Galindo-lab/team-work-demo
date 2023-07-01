@@ -17,15 +17,15 @@
 
       <form id="Belbin" @submit="submitForm">
         {% comment %}
-          Formulario de belbin, el fomato con '[[]]' es de vue, se puede
-          revisar el formato de abajo para mas informacion   
+          Formulario de belbin, el fomato con '[[]]' es de vue, se 
+          puede revisar el formato de abajo para mas informacion   
         {% endcomment %}
         <div v-for="section in sections" :key="section.id">
           <h3>[[ section.title ]]</h3>
-          <p>Puntos restantes: [[ section.totalPoints ]]</p>
+          <p> [[ section.points ]] puntos de [[ section.availablePoints ]] <p>
           <div v-for="question in section.questions" :key="question.id">
             <label>[[ question.label ]]</label>
-            <input type="number" v-model.number="question.answer">
+            <input type="number" v-model.number="question.points">
           </div>
         </div>
 
