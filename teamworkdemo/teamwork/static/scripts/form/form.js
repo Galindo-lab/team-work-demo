@@ -12,7 +12,7 @@ new Vue({
 //     questions: [
 //         {
 //             label: "pregunta 1",   Texto de la pregunta 
-//             points: 0,             Numero de puntos asignados a la pregunta
+//             points: 0,             Numero de puntos asignados
 //             for: "plant"           Perfil al que aportan los puntos:
 //                                     - resource_investigator
 //                                     - team_worker
@@ -34,7 +34,7 @@ new Vue({
                 questions: [
                     {
                         label: "pregunta 1",
-                        for: "",
+                        for: "plant",
                         points: 0,
                     },
                 ]
@@ -47,12 +47,12 @@ new Vue({
                 questions: [
                     {
                         label: "pregunta 1",
-                        for: "",
+                        for: "implementer",
                         points: 0,
                     },
                     {
                         label: "pregunta 2",
-                        for: "",
+                        for: "completer_finisher",
                         points: 0,
                     },
                 ]
@@ -64,7 +64,20 @@ new Vue({
         submitForm(event) {
             // acciones cuando se presiona aceptar
             event.preventDefault();
-            console.log(this.sections);
+
+            for(const section of this.sections) {
+                if (section.points !== section.availablePoints) {
+                    alert("error en la seccion " + section.title)
+                    return
+                }
+            }
+
+            console.log("okidoky")
+
+        },
+        
+        validSection(section) {
+            return section.availablePoints === section.points
         }
     },
     watch: {
