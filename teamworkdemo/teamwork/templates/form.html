@@ -20,6 +20,9 @@
           Formulario de belbin, el fomato con '[[]]' es de vue, se 
           puede revisar el formato de abajo para mas informacion   
         {% endcomment %}
+
+        {% csrf_token %}
+        
         <div v-for="section in sections" :key="section.id">
           <h3>[[ section.title ]]</h3>
           <p> [[ section.points ]] puntos de [[ section.availablePoints ]] <p>

@@ -29,7 +29,7 @@ new Vue({
 
             {
                 title: "seccion 1",
-                availablePoints: 10,
+                availablePoints: 2,
                 points: 0,
                 questions: [
                     {
@@ -42,7 +42,7 @@ new Vue({
 
             {
                 title: "seccion 2",
-                availablePoints: 10,
+                availablePoints: 2,
                 points: 0,
                 questions: [
                     {
@@ -81,10 +81,31 @@ new Vue({
             var csrfToken = form.elements.csrfmiddlewaretoken.value;
 
             // convertir el formulario al modelo del 'BelbinUserProfile'
-            var belbin = this.belbinProfile()
+            var BelbinForm = this.belbinProfile()
 
-            // fetchdata
-            console.log("okidoky")
+           
+            // Agrega el token CSRF a la cabecera de la solicitud
+            var headers = {
+                'X-CSRFToken': csrfToken
+            };
+
+            fetch(form.action, {
+                method: 'POST',
+                body: BelbinForm,
+                headers: headers
+            }).then((response) => {
+                // Maneja la respuesta del servidor
+                if (response.ok) {
+                    console.log("Solicitud POST exitosa");
+
+                    // TODO: Hacer algo más elegante
+                    location.reload()
+                } else {
+                    console.error("Error en la solicitud POST");
+                }
+            }).catch((error) => {
+                console.error("Error en la solicitud POST:", error);
+            });
 
         },
 
@@ -127,11 +148,12 @@ new Vue({
                     }
 
                     // incrementar los puntos 
-                    points = formData.get(question.profile) + question.points 
-                    formData.set(question.profile, profilePoints)
+                    points = formData.get(question.profile) + question.points
+                    formData.set(question.profile, points)
                 }
             }
 
+            return formData
         }
     },
     watch: {
