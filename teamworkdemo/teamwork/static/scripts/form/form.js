@@ -4,7 +4,6 @@ new Vue({
     el: '#Belbin',
     data: {
         sections: [
-
             // title: "sección de ejemplo",   Titulo de la sección 
             // availablePoints: 10,           Maximo numero de puntos para repartir
             // points: 0,                     Numero de puntos repartidos
@@ -29,48 +28,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "Creo que sé ver rápidamente nuevas oportunidades y sacar partido de ellas.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Sé trabajar bien con una amplia variedad de gente.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "Producir ideas es una de mis aptitudes personales.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Mi habilidad reside en ser capaz de hacer que las personas hablen cuando detecto que tienen algo de valor con lo que contribuir a los objetivos del grupo.",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Mi efectividad personal tiene mucho que ver con mi capacidad para 'seguir hacia delante'.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "No me importa afrontar una impopularidad temporal si esta lleva a resultados que al final merezcan la pena.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Normalmente soy capaz de saber qué es realista y qué tiene posibilidades de funcionar.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Puedo argumentar razonadamente a favor de distintas alternativas de acción excluyentes sin que estén presentes los prejuicios.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Mis comentarios tanto sobre los puntos generales como específicos son siempre bien recibidos.",
-                        profile: "tonto",
+                        profile: "specialist",
                         points: 0,
                     },
                 ]
@@ -83,48 +91,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "No estoy a gusto a menos que las reuniones estén bien estructuradas, controladas y generalmente bien conducidas.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Tengo inclinación a ser demasiado generoso hacia otros que tienen un punto de vista válido al que no se le ha prestado suficiente atención.",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "Cuando en el equipo nos ponemos a buscar nuevas ideas, yo tiendo a hablar demasiado.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Mi punto de vista, más objetivo, hace que me resulte difícil reunirme cómodamente con colegas.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Algunas veces soy visto como enérgico y dominante si se tiene que hacer una cosa.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "Encuentro difícil dirigir estando al frente, quizá porque me puedo dejar llevar demasiado por el ambiente del grupo.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Tengo tendencia a ensimismarme en ideas que se me ocurren a mí; y por ello perder el contacto con lo que estamos haciendo.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Mis colegas ven que suelo estar preocupado innecesariamente por los detalles y por la posibilidad de que las cosas vayan mal.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Me cuesta contribuir a menos que el tema tenga algo que ver con algo que conozca bien.",
-                        profile: "",
+                        profile: "specialist",
                         points: 0,
                     }
                 ]
@@ -137,48 +154,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "Tengo capacidad para influir sobre las personas sin presionarlas.",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Mi nivel de atención continua me evita cometer tanto omisiones como errores por descuido.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "No dudo en tomar medidas para asegurar que en la reunión no se pierde el tiempo ni se pierden de vista los objetivos.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Se puede contar conmigo para contribuir con algo original.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Estoy siempre dispuesto a respaldar una buena sugerencia de interés para todos.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "Me gusta buscar lo último en ideas y desarrollos.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Creo que mi capacidad de juicio puede ayudar a tomar la decisión adecuada.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Se puede confiar en mí para contar con que todo el trato esencial esté organizado.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Se pede tener la seguridad de que seré yo mismo.",
-                        profile: "",
+                        profile: "specialist",
                         points: 0,
                     },
                 ]
@@ -191,48 +217,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "Tengo bastante interés en conocer mejor a los colegas.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Soy reacio a dar una oportunidad a los puntos de vista de otros o a apoyar el punto de vista de una minoría.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "Generalmente encuentro un argumento con el que refutar proposiciones poco firmes.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Creo que tengo talento para hacer que funcionen las cosas una vez tiene que ponerse en práctica un plan.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Tengo tendencia a evitar lo obvio y salir con lo inesperado.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "Aporto un toque de perfección a todo el trabajo que dirijo.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Hago uso de contactos ajenos al grupo en sí mismo.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Al mismo tiempo que estoy interesado en todos los puntos de vista, no tengo ningún problema cuando la decisión ha de ser tomada. ",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Contribuyo cuando realmente sé del tema.",
-                        profile: "",
+                        profile: "specialist",
                         points: 0,
                     },
                 ]
@@ -245,48 +280,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "Disfruto analizando situaciones y sopesando las posibles alternativas.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Me intereso por encontrar soluciones prácticas a los problemas.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "Me gusta ver que estoy fomentando buenas relaciones de trabajo.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Sé influir fuertemente en la toma de decisiones.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Sé contactar con gente que podría tener algo nuevo que ofrecer.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "Sé poner a la gente de acuerdo en un camino a seguir, si es necesario.",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Me siento en mi elemento cuando puedo dedicar toda mi atención a una tarea.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Me gusta encontrar un área que ensanche mi imaginación.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Siento que estoy utilizando mi formación y mis especiales aptitudes para sacar partido de las situaciones.",
-                        profile: "",
+                        profile: "specialist",
                         points: 0,
                     },
                 ]
@@ -299,48 +343,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "Me apetecería retirarme a un rincón para idear una salida al problema antes que aplicar una línea de acciones.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Estaría dispuesto a trabajar con la persona que me mostrara la propuesta más positiva.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "Encontraría la manera de reducir el tamaño de la tarea discerniendo a qué aspecto contribuirán mejor los diferentes individuos.",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Mi sentido natural de la urgencia ayudaría a asegurar que no sobrepasáramos el plazo previsto.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Creo que no me alteraría y mantendría mi capacidad de pensar intacta.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "Mantendría invariables los objetivos a pesar de las presiones.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Llevaría de la mano al grupo si viera que no está haciendo ningún progreso.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Fomentaría discusiones de cara a estimular nuevas ideas y hacer que algo empezara a moverse.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Enfocaría todo el problema desde el punto de vista del conocimiento que tuviera sobre el tema.",
-                        profile: "",
+                        profile: "specialist",
                         points: 0,
                     },
                 ]
@@ -353,48 +406,57 @@ new Vue({
                 points: 0,
                 questions: [
                     {
+                        // 3
                         label: "Suelo mostrar mi impaciencia con aquellos que están impidiendo el progreso.",
-                        profile: "",
+                        profile: "shaper",
                         points: 0,
                     },
                     {
+                        // 4
                         label: "Los demás podrían criticarme por ser demasiado analítico e insuficientemente intuitivo.",
-                        profile: "",
+                        profile: "monitor_evaluator",
                         points: 0,
                     },
                     {
+                        // 5
                         label: "Mi deseo de asegurar que el trabajo se hace de manera adecuada puede suponer un freno.",
-                        profile: "",
+                        profile: "resource_investigator",
                         points: 0,
                     },
                     {
+                        // 6
                         label: "Tiendo a aburrirme bastante fácilmente y a confiar en uno o dos miembros del grupo interesantes para sacarme del aburrimiento.",
-                        profile: "",
+                        profile: "completer_finisher",
                         points: 0,
                     },
                     {
+                        // 7
                         label: "Encuentro difícil empezar algo a menos que las metas estén claras.",
-                        profile: "",
+                        profile: "implementer",
                         points: 0,
                     },
                     {
+                        // 8
                         label: "A veces soy pobre en la explicación y clarificación de ideas complejas que se me ocurren a mí.",
-                        profile: "",
+                        profile: "plant",
                         points: 0,
                     },
                     {
+                        // 9
                         label: "Soy consciente de que pido a los otros las cosas que no puedo hacer por mí mismo.",
-                        profile: "",
+                        profile: "coordinator",
                         points: 0,
                     },
                     {
+                        // 10
                         label: "Dudo en exponer mis puntos de vista cuando me encuentro con una buena oposición.",
-                        profile: "",
+                        profile: "team_worker",
                         points: 0,
                     },
                     {
+                        // 11
                         label: "Me inclino a pensar que estoy perdiendo el tiempo y que lo haría mejor yo solo.",
-                        profile: "",
+                        profile: "specialist",
                         points: 0,
                     },
                 ]
@@ -441,7 +503,7 @@ new Vue({
                 if (response.ok) {
                     console.log("Solicitud POST exitosa");
 
-                    // TODO: Hacer algo más elegante
+                    // TODO: Mostrar la pantalla de resultados
                     location.reload()
                 } else {
                     console.error("Error en la solicitud POST");
@@ -491,7 +553,7 @@ new Vue({
                     }
 
                     // incrementar los puntos 
-                    points = formData.get(question.profile) + question.points
+                    points = parseInt(formData.get(question.profile)) + parseInt(question.points)
                     formData.set(question.profile, points)
                 }
             }
