@@ -50,29 +50,3 @@
 
 </body>
 </html>
-
-
-
-
-{% comment %} <div id="app">
-    <h1>Formulario de reparto de puntos</h1>
-
-    <form @submit.prevent="submitForm">
-        {% csrf_token %}
-            
-        <div v-for="(section, index) in sections" :key="index">
-
-            <h2>[[ section.title ]]</h2>
-            <p>Puntos restantes: [[ section.remainingPoints ]]</p>
-
-            <div v-for="(question, questionIndex) in section.questions" :key="questionIndex">
-            <label>[[ question.label ]]</label>
-            <input type="number" v-model="question.points" min="0" max="10">
-            </div>
-            
-        </div>
-    
-        <button type="submit">Enviar</button>
-    </form>
-</div> {% endcomment %}
-
