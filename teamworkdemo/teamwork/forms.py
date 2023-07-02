@@ -44,14 +44,3 @@ class BelbinForm(forms.ModelForm):
             'implementer',
             'completer_finisher',
         ]
-
-# class BelbinForm(forms.ModelForm):
-#     """
-#     Formulario de belbin
-#     """
-
-#     def __init__(self, *args, **kwargs):
-#         super(BelbinForm, self).__init__(*args, **kwargs)
-
-    # Utilizar meta programacion para no tener que harcodear cada
-    # campo del formulario
