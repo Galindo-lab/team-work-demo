@@ -1,19 +1,52 @@
 
-{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="{% static 'scripts/vue/vue.js' %}"></script>
+</head>
+<body>
+    {% block content %}
 
     {% if not belbin_form.exists %}
 
-        <form method="post">
-            {% csrf_token %}
+      <form id="Belbin" @submit="submitForm">
+        {% comment %}
+          Formulario de belbin, el fomato con '[[]]' es de vue, se 
+          puede revisar el formato de abajo para mas informacion   
+        {% endcomment %}
 
-            {{ form }}
-
-            <button>Log in</button>
-        </form>
-
+        {% csrf_token %}
         
+        <div v-for="section in sections" :key="section.id">
+          <h3>[[ section.title ]]</h3>
+          <p> [[ section.points ]] puntos de [[ section.availablePoints ]] <p>
+          <div v-for="question in section.questions" :key="question.id">
+            <label>[[ question.label ]]</label>
+            <input type="number" v-model.number="question.points">
+          </div>
+        </div>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      {% comment %}
+        Aqui esta la lógica del formulario 
+      {% endcomment %}
+      <script src="{% static 'scripts/form/form.js' %}"></script>
+
     {% else %}
-        Ya haz resuelto este formulario...
+
+      Ya haz resuelto este formulario...
+
     {% endif %}
 
-{% endblock content %}
+    {% endblock content %}
+
+</body>
+</html>

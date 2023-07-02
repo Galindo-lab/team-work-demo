@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.validators import MinValueValidator
 
 
 class Profile(models.Model):
@@ -29,7 +30,7 @@ class Group(models.Model):
     )
 
     class Meta:
-        # permite que haya nombre repetidos mientras el administrador 
+        # permite que haya nombre repetidos mientras el administrador
         # no sea el mismo
 
         unique_together = (
@@ -75,15 +76,68 @@ class BelbinUserProfile(models.Model):
     )
 
     # perfiles de belbin
-    resource_investigator = models.IntegerField(default=0)
-    team_worker = models.IntegerField(default=0)
-    coordinator = models.IntegerField(default=0)
-    plant = models.IntegerField(default=0)
-    monitor_evaluator = models.IntegerField(default=0)
-    specialist = models.IntegerField(default=0)
-    shaper = models.IntegerField(default=0)
-    implementer = models.IntegerField(default=0)
-    completer_finisher = models.IntegerField(default=0)
+    resource_investigator = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    team_worker = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    coordinator = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    plant = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    monitor_evaluator = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    specialist = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    shaper = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    implementer = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    completer_finisher = models.IntegerField(
+        default=0,
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
 
     class Meta:
         ordering = ['-timestamp']

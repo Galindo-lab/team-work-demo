@@ -1,50 +1,41 @@
 {
-  "sections": [
+  "sections" : [
     {
       "title": "¿Qué es lo que yo creo que puedo aportar a un equipo?",
       "fields": [
         {
-          // 3
           "label": "Creo que sé ver rápidamente nuevas oportunidades y sacar partido de ellas.",
           "profile": ""
         },
         {
-          // 4
           "label": "Sé trabajar bien con una amplia variedad de gente.",
           "profile": ""
         },
         {
-          // 5
           "label": "Producir ideas es una de mis aptitudes personales.",
           "profile": ""
         },
         {
-          // 6
           "label": "Mi habilidad reside en ser capaz de hacer que las personas hablen cuando detecto que tienen algo de valor con lo que contribuir a los objetivos del grupo.",
           "profile": ""
         },
         {
-          // 7
           "label": "Mi efectividad personal tiene mucho que ver con mi capacidad para 'seguir hacia delante'.",
           "profile": ""
         },
         {
-          // 8
           "label": "No me importa afrontar una impopularidad temporal si esta lleva a resultados que al final merezcan la pena.",
           "profile": ""
         },
         {
-          // 9
           "label": "Normalmente soy capaz de saber qué es realista y qué tiene posibilidades de funcionar.",
           "profile": ""
         },
         {
-          // 10
           "label": "Puedo argumentar razonadamente a favor de distintas alternativas de acción excluyentes sin que estén presentes los prejuicios.",
           "profile": ""
         },
         {
-          // 11
           "label": "Mis comentarios tanto sobre los puntos generales como específicos son siempre bien recibidos.",
           "profile": ""
         }
