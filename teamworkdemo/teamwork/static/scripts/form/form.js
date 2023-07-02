@@ -22,6 +22,7 @@ new Vue({
             //                                 - implementer
             //                                 - completer_finisher
 
+            // 1
             {
                 title: "¿Qué es lo que yo creo que puedo aportar a un equipo?",
                 availablePoints: 10,
@@ -75,8 +76,7 @@ new Vue({
                 ]
             },
 
-
-
+            // 2
             {
                 title: "Si tuviera algún problemilla trabajando en equipo, podría ser debido a:",
                 availablePoints: 10,
@@ -130,8 +130,7 @@ new Vue({
                 ]
             },
 
-
-
+            // 3
             {
                 title: "Cuando estoy metido en un proyecto con otras personas:",
                 availablePoints: 10,
@@ -185,6 +184,61 @@ new Vue({
                 ]
             },
 
+            // 4
+            {
+                title: "Mi forma de abordar el trabajo en equipo es: ",
+                availablePoints: 10,
+                points: 0,
+                questions: [
+                    {
+                        label: "Tengo bastante interés en conocer mejor a los colegas.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Soy reacio a dar una oportunidad a los puntos de vista de otros o a apoyar el punto de vista de una minoría.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Generalmente encuentro un argumento con el que refutar proposiciones poco firmes.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Creo que tengo talento para hacer que funcionen las cosas una vez tiene que ponerse en práctica un plan.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Tengo tendencia a evitar lo obvio y salir con lo inesperado.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Aporto un toque de perfección a todo el trabajo que dirijo.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Hago uso de contactos ajenos al grupo en sí mismo.",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Al mismo tiempo que estoy interesado en todos los puntos de vista, no tengo ningún problema cuando la decisión ha de ser tomada. ",
+                        profile: "",
+                        points: 0,
+                    },
+                    {
+                        label: "Contribuyo cuando realmente sé del tema.",
+                        profile: "",
+                        points: 0,
+                    },
+                ]
+            },
+
+            // 5
             {
                 title: "Obtengo satisfacción de un trabajo porque...",
                 availablePoints: 10,
@@ -238,6 +292,7 @@ new Vue({
                 ]
             },
 
+            // 6
             {
                 title: "Si de repente me dan la responsabilidad de una tarea difícil, con un tiempo limitado y gente desconocida:",
                 availablePoints: 10,
@@ -291,6 +346,7 @@ new Vue({
                 ]
             },
 
+            // 7
             {
                 title: "Haciendo referencia a los problemas que tengo trabajando en equipo:",
                 availablePoints: 10,
