@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MinValueValidator
 
+import json
 
 class Profile(models.Model):
     """
@@ -78,9 +79,7 @@ class BelbinUserProfile(models.Model):
     # perfiles de belbin
     resource_investigator = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     team_worker = models.IntegerField(
@@ -92,52 +91,54 @@ class BelbinUserProfile(models.Model):
 
     coordinator = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     plant = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     monitor_evaluator = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     specialist = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     shaper = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     implementer = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
 
     completer_finisher = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
+        validators=[MinValueValidator(0)]
     )
+
+    def json_profiles(self):
+
+        diccionario  ={
+            "resource_investigator": self.resource_investigator,
+            "team_worker": self.team_worker,
+            "coordinator": self.coordinator,
+            "plant": self.plant,
+            "monitor_evaluator": self.monitor_evaluator,
+            "specialist": self.specialist,
+            "shaper": self.shaper,
+            "implementer": self.implementer,
+            "completer_finisher": self.completer_finisher,
+        }
+
+        return json.dumps(diccionario)
 
     class Meta:
         ordering = ['-timestamp']

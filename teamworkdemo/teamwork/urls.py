@@ -22,6 +22,7 @@ urlpatterns = [
     path('invitation/<str:username>/<str:group_name>', views.invitation_request, name='invitation'),
     path('remove/<int:integrante_id>', views.remove_member, name='remove'),
     path('join/<str:username>/<str:group_name>', views.join_group, name='join'),
-    path('form/<str:username>/<str:group_name>', views.belbin_form, name='form')
+    path('form/<str:username>/<str:group_name>', views.belbin_form, name='form'),
+    path('results/<str:username>/<str:group_name>', views.form_results, name='form')
 
 ]

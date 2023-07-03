@@ -1,0 +1,53 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="{% static 'scripts/vue/vue.js' %}"></script>
+</head>
+<body>
+
+
+    <div id="results">
+        <div>Clave máxima: [[ maxKey ]] </div>
+        <div>Valor máximo: [[maxValue]] </div>
+    </div>
+
+   
+
+    <script>
+        new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#results',
+            data: {
+                // Parsea el JSON y asigna a la variable jsonData
+                jsonData: JSON.parse("{{ profile.json_profiles|escapejs }}"), 
+                maxKey: '',
+                maxValue: 0 
+            },
+
+            created() {
+                this.findMaxValue();
+            },
+
+            methods: {
+                findMaxValue() {
+                  const entries = Object.entries(this.jsonData);
+                  for (const [key, value] of entries) {
+                    if (value > this.maxValue) {
+                      this.maxValue = value;
+                      this.maxKey = key;
+                    }
+                  }
+                }
+            }
+              
+        })
+    </script>
+</body>
+</html>

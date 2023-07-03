@@ -174,8 +174,16 @@ def remove_member(request, integrante_id):
 
 @login_required
 def belbin_form(request, username, group_name):
-    user = get_object_or_404(User, username=username)
-    group = get_object_or_404(Group, name=group_name, admin=user)
+    user = get_object_or_404(
+        User, 
+        username=username
+    )
+    
+    group = get_object_or_404(
+        Group,
+        name=group_name,
+        admin=user
+    )
 
     integrante = get_object_or_404(
         Member, 
@@ -212,3 +220,33 @@ def belbin_form(request, username, group_name):
     form_save.save()
 
     return redirect('dashboard')
+
+
+@login_required
+def form_results(request, username, group_name):
+    user = get_object_or_404(
+        User, 
+        username=username
+    )
+    
+    group = get_object_or_404(
+        Group,
+        name=group_name,
+        admin=user
+    )
+
+    integrante = get_object_or_404(
+        Member, 
+        member=request.user, 
+        group=group
+    )
+
+    belbinProfile = get_object_or_404(
+        BelbinUserProfile,
+        integrante=integrante
+    )
+
+    return render(request, 'results.html', {
+        'profile' : belbinProfile
+    })
+        
