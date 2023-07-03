@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator
 
 import json
 
+
 class Profile(models.Model):
     """
     Esta clase permite agregar informacion adicional de los usuarios
@@ -126,7 +127,7 @@ class BelbinUserProfile(models.Model):
 
     def json_profiles(self):
 
-        diccionario  ={
+        diccionario = {
             "resource_investigator": self.resource_investigator,
             "team_worker": self.team_worker,
             "coordinator": self.coordinator,
