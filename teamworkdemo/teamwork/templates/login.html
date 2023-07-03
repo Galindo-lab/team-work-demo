@@ -1,15 +1,42 @@
 
+{% extends 'layouts/base.html' %}
+
+{% comment %} para agregar el filtro 'render_field' {% endcomment %}
+{% load widget_tweaks %}
+
+{% comment %} cargar los datos estaticos {% endcomment %}
+{% load static %}
+
+
 {% block content %}
-    <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="user-name-id">Username: {{form.username}}</label> <br>
-        <label for="password-id">Password: {{form.password}}</label> <br>
 
-        {% if form.errors %}
-            <p>Usuario o contraseña invalidos</p><br>
-        {% endif %}
+    {% comment %} https://stackoverflow.com/a/71544378 {% endcomment %}
+    <div class="d-flex flex-column min-vh-100 min-vw-100">
+        <div class="d-flex flex-grow-1 justify-content-center align-items-center m-4" >
 
-        <button>Log in</button>
-    </form>
+            <form method="post" class="row h-100 justify-content-center align-items-center" style="max-width: 500px">
+                <div class="text-center mb-5 h4">
+                    Inicia sesión
+                </div>
+    
+                {% csrf_token %}
+    
+                {% render_field form.username class="form-control mb-4" placeholder="Usuario"%}
+    
+                {% render_field form.password class="form-control mb-4" placeholder="Contraseña"%}
+                
+                {% if form.errors %}
+                    <p>Usuario o contraseña invalidos</p><br>
+                {% endif %}
+    
+                <button class="btn btn-primary w-100 mt-4">Iniciar sesión</button>
+    
+                <div class="mt-4 text-center">
+                    ¿No eres miembro? <a href="{% url 'register' %}"> Registrate </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
 {% endblock content %}
