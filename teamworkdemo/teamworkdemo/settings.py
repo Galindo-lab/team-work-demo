@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'teamwork.apps.TeamworkConfig',
+    'widget_tweaks',
     'teamworkdemo'
 ]
 
@@ -105,10 +106,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+# TIME_ZONE = 'UTC'
+# USE_I18N = True
 
-TIME_ZONE = 'UTC'
-
+# https://es.stackoverflow.com/a/237284/330775
+LANGUAGE_CODE = 'es'
+TIME_ZONE = 'America/Lima'
 USE_I18N = True
 
 USE_TZ = True

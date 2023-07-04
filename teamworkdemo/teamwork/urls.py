@@ -1,13 +1,20 @@
 from django.urls import path
-from . import views
 from django.contrib.auth.views import LoginView, LogoutView
 
 from django.conf import settings
 from django.conf.urls.static import static
 
+from . import views
+from . forms import UserLoginForm
+
 urlpatterns = [
-    # login y logout
-    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    # login 
+    path('login/', LoginView.as_view(
+        template_name='login.html',
+        authentication_form=UserLoginForm
+    ), name='login'),
+
+    # logout
     path('logout/', LogoutView.as_view(), name='logout'),
 
     # url patterns
@@ -22,6 +29,7 @@ urlpatterns = [
     path('invitation/<str:username>/<str:group_name>', views.invitation_request, name='invitation'),
     path('remove/<int:integrante_id>', views.remove_member, name='remove'),
     path('join/<str:username>/<str:group_name>', views.join_group, name='join'),
-    path('form/<str:username>/<str:group_name>', views.belbin_form, name='form')
+    path('form/<str:username>/<str:group_name>', views.belbin_form, name='form'),
+    path('results/<str:username>/<str:group_name>', views.form_results, name='results')
 
 ]
