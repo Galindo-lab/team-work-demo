@@ -71,7 +71,11 @@ def dashboard(request):
     form = CreateGroupForm(request.POST)
 
     if not form.is_valid():
-        return HttpResponse("ya existe el grupo")
+        return render(request, 'dashboard.html', {
+            'user_groups': user_groups,
+            'user_member': user_member,
+            'creteGroupForm': form
+        })
 
     # verificar que el nombre sea unico
     # https://stackoverflow.com/a/30049925/22015904
@@ -82,7 +86,7 @@ def dashboard(request):
 
     if group.exists():
         # https://stackoverflow.com/a/60258267/22015904
-        form.add_error('name', 'Ya existe ese registro')
+        form.add_error('name', 'Ya existe un grupo con ese nombre')
 
         return render(request, 'dashboard.html', {
             'user_groups': user_groups,

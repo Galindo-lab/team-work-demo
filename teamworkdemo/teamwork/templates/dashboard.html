@@ -6,45 +6,83 @@
 {% comment %} cargar los datos estaticos {% endcomment %}
 {% load static %}
 
-
 {% block content %}
 
-    <div class="d-flex m-4 justify-content-center row" >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-xl">
+            <a class="navbar-brand" href="#">
+                Bright TeamWork 
+            </a>
 
-        <div style="max-width: 800px">
+            <a class="btn text-nowrap" href="{% url 'logout' %}">Cerrar sesión</a>
+        </div>
+    </nav> 
 
-            <div class="mt-4 mb-3 h4" >
-                <label for="">
-                    Formularios de {{ request.user }}
-                </label>
-            </div>
+    <div class="row mb-3 justify-content-center">
 
+        <div class="col-md-6">
+            <label class="mt-5 mb-4 h5">
+                Formularios de {{user}}
+            </label>
 
-            <form method="post" class="d-flex flex-grow-2 gap-2">
-                {% comment %} Formulario para crear un grupo nuevo {% endcomment %}
+            <form method="post" class="input-group">
                 {% csrf_token %}
-                {% render_field creteGroupForm.name class="form-control flex-grow-1" placeholder="Nombre del grupo"%}
-
+                {% render_field creteGroupForm.name class="form-control" placeholder="Nombre del grupo"%}
                 <button class="btn btn-primary text-nowrap">Crear equipo</button>
-                <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
             </form>
 
             {% if creteGroupForm.errors %}
                 <p class="text-danger"> {% render_field creteGroupForm.name.errors.as_text %} </p>
             {% endif %}
 
-            <div class="m-4">
+
+            <table class="table mt-5">
+                <thead>
+                  <tr class="table-active">
+                    <th scope="col" class="w-75">Nombre</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                    {% for group in user_groups %}
+
+                    <tr>
+                        <td><a href="{% url 'details' group.id %}"> {{ group.name }} </a></td>
+                        <td> 
+                            <a href="{% url 'delete' group.id %}">Eliminar</a> - 
+                            <a href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+
+              </table>
+
+
+
+
+
+
+
+            {% comment %} <div class="m-4">
                 <ul>
-                {% for group in user_groups %}
-                    <li>
-                        <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
-                    </li>
-                {% endfor %}
+                    {% for group in user_groups %}
+                        <li>
+                            <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
+                        </li>
+                    {% endfor %}
                 </ul>
-            </div>
+            </div> {% endcomment %}
 
         </div>
-       
+
+        
+
     </div>
    
 {% endblock content %}
+
+
+
