@@ -1,7 +1,65 @@
+{% extends 'layouts/base.html' %}
+
+{% comment %} para agregar el filtro 'render_field' {% endcomment %}
+{% load widget_tweaks %}
+
+{% comment %} cargar los datos estaticos {% endcomment %}
+{% load static %}
 
 
 {% block content %}
-    <h1>Dashboard de {{ user }}!</h1>
+
+    {% comment %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                aqui va el titulo 
+            </a>
+        </div>
+
+        <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
+    </nav> 
+    {% endcomment %}
+
+    
+
+
+    <div class="d-flex m-4 justify-content-center row" >
+
+        <div style="max-width: 800px">
+
+            <div class="mt-4 mb-3 h4" >
+                <label for="">
+                    Formularios
+                </label>
+            </div>
+
+            <div class="d-flex flex-grow-2 gap-2">
+                <input class="form-control flex-grow-1" placeholder="Nombre del equipo" type="text">
+                {% comment %} 
+                    TODO: Unir el formulario para crear grupos con esta view
+                {% endcomment %}
+                <a class="btn btn-primary text-nowrap" href="{% url 'create' %}">Crear equipo</a>
+                <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
+            </div>
+
+            <div class="m-4">
+                <ul>
+                {% for group in user_groups %}
+                    <li>
+                        <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
+                    </li>
+                {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+       
+    </div>
+   
+{% endblock content %}
+
+    {% comment %} <h1>Dashboard de {{ user }}!</h1>
    
     <div>
         <h2>grupos</h2>
@@ -30,7 +88,4 @@
             <li><a href="{% url 'create' %}">Crear grupo</a></li>
             <li><a href="{% url 'logout' %}" type="submit">logout</a> </li>
         </ul>
-    </div>
-
-   
-{% endblock content %}
+    </div> {% endcomment %}
