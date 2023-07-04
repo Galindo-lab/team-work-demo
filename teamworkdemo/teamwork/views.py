@@ -48,6 +48,7 @@ def register(request):
 
 @login_required
 def dashboard(request):
+    # Mostrar el dashboard normal
     user = User.objects.get(
         username=request.user.username
     )
@@ -58,27 +59,19 @@ def dashboard(request):
     # grupos a los que el usuario pertenece
     user_member = user.group_member.all()
 
-    return render(request, 'dashboard.html', {
-        'user_groups': user_groups,
-        'user_member': user_member
-    })
-
-
-@login_required
-def create_group(request):
-    # mandar el formulario vacio
     if request.method != 'POST':
-        return render(request, 'create_group.html', {
-            'form': CreateGroupForm()
+        # formulario vacio
+        return render(request, 'dashboard.html', {
+            'user_groups': user_groups,
+            'user_member': user_member,
+            'creteGroupForm': CreateGroupForm()
         })
 
     # recuperar los datos del formulario
     form = CreateGroupForm(request.POST)
 
     if not form.is_valid():
-        return render(request, 'create_group.html', {
-            'form': form
-        })
+        return HttpResponse("ya existe el grupo")
 
     # verificar que el nombre sea unico
     # https://stackoverflow.com/a/30049925/22015904
@@ -91,8 +84,10 @@ def create_group(request):
         # https://stackoverflow.com/a/60258267/22015904
         form.add_error('name', 'Ya existe ese registro')
 
-        return render(request, 'create_group.html', {
-            'form': form
+        return render(request, 'dashboard.html', {
+            'user_groups': user_groups,
+            'user_member': user_member,
+            'creteGroupForm': form
         })
 
     # guardar el registro
@@ -175,10 +170,10 @@ def remove_member(request, integrante_id):
 @login_required
 def belbin_form(request, username, group_name):
     user = get_object_or_404(
-        User, 
+        User,
         username=username
     )
-    
+
     group = get_object_or_404(
         Group,
         name=group_name,
@@ -186,8 +181,8 @@ def belbin_form(request, username, group_name):
     )
 
     integrante = get_object_or_404(
-        Member, 
-        member=request.user, 
+        Member,
+        member=request.user,
         group=group
     )
 
@@ -207,13 +202,13 @@ def belbin_form(request, username, group_name):
     form = BelbinForm(request.POST)
 
     if not form.is_valid():
-        # si el formulario es invalido mostrar error 
+        # si el formulario es invalido mostrar error
         return render(request, 'form.html', {
             'form': form,
             'integrante': integrante,
             'belbin_form': belbin_form
         })
-    
+
     # guardar el formulario
     form_save = form.save(commit=False)
     form_save.integrante = integrante
@@ -225,10 +220,10 @@ def belbin_form(request, username, group_name):
 @login_required
 def form_results(request, username, group_name):
     user = get_object_or_404(
-        User, 
+        User,
         username=username
     )
-    
+
     group = get_object_or_404(
         Group,
         name=group_name,
@@ -236,8 +231,8 @@ def form_results(request, username, group_name):
     )
 
     integrante = get_object_or_404(
-        Member, 
-        member=request.user, 
+        Member,
+        member=request.user,
         group=group
     )
 
@@ -247,6 +242,5 @@ def form_results(request, username, group_name):
     )
 
     return render(request, 'results.html', {
-        'profile' : belbinProfile
+        'profile': belbinProfile
     })
-        

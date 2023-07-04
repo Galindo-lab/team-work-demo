@@ -9,39 +9,29 @@
 
 {% block content %}
 
-    {% comment %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                aqui va el titulo 
-            </a>
-        </div>
-
-        <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
-    </nav> 
-    {% endcomment %}
-
-    
-
-
     <div class="d-flex m-4 justify-content-center row" >
 
         <div style="max-width: 800px">
 
             <div class="mt-4 mb-3 h4" >
                 <label for="">
-                    Formularios
+                    Formularios de {{ request.user }}
                 </label>
             </div>
 
-            <div class="d-flex flex-grow-2 gap-2">
-                <input class="form-control flex-grow-1" placeholder="Nombre del equipo" type="text">
-                {% comment %} 
-                    TODO: Unir el formulario para crear grupos con esta view
-                {% endcomment %}
-                <a class="btn btn-primary text-nowrap" href="{% url 'create' %}">Crear equipo</a>
+
+            <form method="post" class="d-flex flex-grow-2 gap-2">
+                {% comment %} Formulario para crear un grupo nuevo {% endcomment %}
+                {% csrf_token %}
+                {% render_field creteGroupForm.name class="form-control flex-grow-1" placeholder="Nombre del grupo"%}
+
+                <button class="btn btn-primary text-nowrap">Crear equipo</button>
                 <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
-            </div>
+            </form>
+
+            {% if creteGroupForm.errors %}
+                <p class="text-danger"> {% render_field creteGroupForm.name.errors.as_text %} </p>
+            {% endif %}
 
             <div class="m-4">
                 <ul>
@@ -58,34 +48,3 @@
     </div>
    
 {% endblock content %}
-
-    {% comment %} <h1>Dashboard de {{ user }}!</h1>
-   
-    <div>
-        <h2>grupos</h2>
-        <ul>
-            {% for group_member in user_member %}
-                <li><a href="#"> {{ group_member.group.name }} </a></li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <h2>Tus grupos</h2>
-
-        <ul>
-            {% for group in user_groups %}
-                <li>
-                    <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <h2>Acciones</h2>
-        <ul>
-            <li><a href="{% url 'create' %}">Crear grupo</a></li>
-            <li><a href="{% url 'logout' %}" type="submit">logout</a> </li>
-        </ul>
-    </div> {% endcomment %}
