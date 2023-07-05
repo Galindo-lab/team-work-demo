@@ -154,19 +154,34 @@ def join_group(request,  username, group_name):
     group = get_object_or_404(Group, name=group_name, admin=user)
 
     integrante = Member(
-        member=user,
+        member=request.user,
         group=group
     )
 
     integrante.save()
 
-    # TODO: Rediregir al formulario de Belbin
-    return redirect('dashboard')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required
 def remove_member(request, integrante_id):
     member = Member.objects.get(id=integrante_id)
+
+    belbin_form = BelbinUserProfile.objects.filter(
+        member = member.member,
+        group = member.group
+    )
+
+    if belbin_form.exists():
+        # TODO: buscar una mejor forma de hacer esto
+        # NOTE: quiza se puede agregar el miembro al modelo para eliminar todo en cascada
+        form = BelbinUserProfile.objects.get(
+            member = member.member,
+            group = member.group
+        )
+        
+        form.delete()
+
     member.delete()
 
     # https://stackoverflow.com/a/35796330/22015904
@@ -174,20 +189,20 @@ def remove_member(request, integrante_id):
 
 
 @login_required
-def belbin_form(request, username, group_name):
-    user = get_object_or_404(
+def belbin_form(request, admin_username, group_name):
+    admin_user = get_object_or_404(
         User,
-        username=username
+        username=admin_username
     )
 
     group = get_object_or_404(
         Group,
         name=group_name,
-        admin=user
+        admin=admin_user
     )
 
     belbin_form = BelbinUserProfile.objects.filter(
-        member = user,
+        member = request.user,
         group = group
     )
 
@@ -210,7 +225,7 @@ def belbin_form(request, username, group_name):
 
     # guardar el formulario
     form_save = form.save(commit=False)
-    form_save.member = user
+    form_save.member = request.user
     form_save.group = group
     form_save.save()
 
