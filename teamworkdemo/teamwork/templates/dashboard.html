@@ -6,86 +6,62 @@
 {% comment %} cargar los datos estaticos {% endcomment %}
 {% load static %}
 
-
 {% block content %}
 
-    {% comment %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                aqui va el titulo 
-            </a>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-xl">
+        <a class="navbar-brand" href="#">
+            Bright TeamWork 
+        </a>
 
-        <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
-    </nav> 
-    {% endcomment %}
-
-    
-
-
-    <div class="d-flex m-4 justify-content-center row" >
-
-        <div style="max-width: 800px">
-
-            <div class="mt-4 mb-3 h4" >
-                <label for="">
-                    Formularios
-                </label>
-            </div>
-
-            <div class="d-flex flex-grow-2 gap-2">
-                <input class="form-control flex-grow-1" placeholder="Nombre del equipo" type="text">
-                {% comment %} 
-                    TODO: Unir el formulario para crear grupos con esta view
-                {% endcomment %}
-                <a class="btn btn-primary text-nowrap" href="{% url 'create' %}">Crear equipo</a>
-                <a class="btn text-nowrap btn-outline-dark" href="{% url 'logout' %}">Cerrar sesión</a>
-            </div>
-
-            <div class="m-4">
-                <ul>
-                {% for group in user_groups %}
-                    <li>
-                        <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
-                    </li>
-                {% endfor %}
-                </ul>
-            </div>
-
-        </div>
-       
+        <a class="btn text-nowrap" href="{% url 'logout' %}">Cerrar sesión</a>
     </div>
+</nav> 
+
+<div class="d-flex mb-3 justify-content-center">
+
+    <div class="col-md-6">
+        <label class="mt-5 mb-4 h5">
+            Formularios de {{user}}
+        </label>
+
+        <form method="post" class="input-group">
+            {% csrf_token %}
+            {% render_field creteGroupForm.name class="form-control" placeholder="Nombre del grupo"%}
+            <button class="btn btn-primary text-nowrap">Crear equipo</button>
+        </form>
+
+        {% if creteGroupForm.errors %}
+            <p class="text-danger"> {% render_field creteGroupForm.name.errors.as_text %} </p>
+        {% endif %}
+
+
+        <table class="table mt-5">
+            <thead>
+                <tr class="table-active">
+                <th scope="col" class="w-75">Nombre</th>
+                <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for group in user_groups %}
+                {% comment %} mostrar los grupos {% endcomment %}
+
+                <tr>
+                    <td>
+                        <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
+                    </td>
+                    <td> 
+                        <a href="{% url 'delete' group.id %}">Eliminar</a> - 
+                        <a href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
    
 {% endblock content %}
-
-    {% comment %} <h1>Dashboard de {{ user }}!</h1>
-   
-    <div>
-        <h2>grupos</h2>
-        <ul>
-            {% for group_member in user_member %}
-                <li><a href="#"> {{ group_member.group.name }} </a></li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <h2>Tus grupos</h2>
-
-        <ul>
-            {% for group in user_groups %}
-                <li>
-                    <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div>
-        <h2>Acciones</h2>
-        <ul>
-            <li><a href="{% url 'create' %}">Crear grupo</a></li>
-            <li><a href="{% url 'logout' %}" type="submit">logout</a> </li>
-        </ul>
-    </div> {% endcomment %}

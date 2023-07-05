@@ -23,7 +23,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
 
     # group
-    path('create/', views.create_group, name='create'),
+    # path('create/', views.create_group, name='create'),
     path('delete/<int:group_id>', views.delete_group, name='delete'),
     path('details/<int:group_id>', views.group_details, name='details'),
     path('invitation/<str:username>/<str:group_name>', views.invitation_request, name='invitation'),
