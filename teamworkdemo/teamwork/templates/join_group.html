@@ -1,30 +1,81 @@
+{% extends 'layouts/base.html' %}
+{% comment %} para agregar el filtro 'render_field' {% endcomment %}
+{% load widget_tweaks %}
+{% comment %} cargar los datos estaticos {% endcomment %}
+{% load static %}
+
 
 {% block content %}
-    <h1>Invitacion al grupo {{ group.name }} </h1>
+<div class="d-flex flex-column min-vh-100 min-vw-100">
+    <div class="d-flex flex-grow-1 justify-content-center align-items-center" >
 
-    {{ group.admin }} te ha invitado al grupo {{ group.name }}. <br>
-    puedes compartir esta URL para invitar a los miembros del equipo
+        <div class="row">
 
-    <h2>Acciones</h2>
-    {% if request.user.is_authenticated %}
+            <div class="text-center">
+                <h1>Invitacion a {{ group.name }} </h1>
 
-        {% if not integrante.exists %}
+                {% if request.user == group.admin %}
+                    Puedes compartir el enlace a esta pagina para invitar a los miembros
+                {% else %}
+                    {{ group.admin }} te ha invitado al grupo {{ group.name }}
+                {% endif %}
+            </div>
 
-            <a href="{% url 'join' user group.name %}">
-                Unirse
-            </a>
 
-        {% else %}
-            
-            Resolver el 
-            <a href="{% url 'form' user group.name %}">
-                formulario
-            </a>
+            {% if request.user.is_authenticated %}
 
-        {% endif %}
+                {% if not integrante.exists %}
+
+                    <a class="btn btn-primary mt-4 text-center w-100" href="{% url 'join' group.admin group.name %}">
+                        Unirse
+                    </a>
+
+                {% else %}
+                    
+                    <a class="btn btn-primary mt-4 text-center w-100" href="{% url 'form' group.admin group.name %}">
+                        Resolver el formulario 
+                    </a>
+
+                {% endif %}
+
+            {% else %}
+
+                <div class="text-center mt-4">
+                    Debes <a href="{% url 'login' %}" target="_blank">iniciar sesion</a> o <a href="{% url 'register' %}" target="_blank">crear una cuenta</a>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% comment %} <h1>Invitacion al grupo {{ group.name }} </h1>
+
+{{ group.admin }} te ha invitado al grupo {{ group.name }}. <br>
+puedes compartir esta URL para invitar a los miembros del equipo
+
+<h2>Acciones</h2>
+{% if request.user.is_authenticated %}
+
+    {% if not integrante.exists %}
+
+        <a href="{% url 'join' user group.name %}">
+            Unirse
+        </a>
 
     {% else %}
-        Debes <a href="{% url 'login' %}">iniciar sesion</a> o <a href="{% url 'register' %}">crear una cuenta</a>
+        
+        Resolver el 
+        <a href="{% url 'form' user group.name %}">
+            formulario
+        </a>
+
     {% endif %}
 
-{% endblock content %}
+{% else %}
+    Debes <a href="{% url 'login' %}">iniciar sesion</a> o <a href="{% url 'register' %}">crear una cuenta</a>
+{% endif %} {% endcomment %}

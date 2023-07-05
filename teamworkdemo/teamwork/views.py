@@ -154,19 +154,34 @@ def join_group(request,  username, group_name):
     group = get_object_or_404(Group, name=group_name, admin=user)
 
     integrante = Member(
-        member=user,
+        member=request.user,
         group=group
     )
 
     integrante.save()
 
-    # TODO: Rediregir al formulario de Belbin
-    return redirect('dashboard')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required
 def remove_member(request, integrante_id):
     member = Member.objects.get(id=integrante_id)
+
+    belbin_form = BelbinUserProfile.objects.filter(
+        member=member.member,
+        group=member.group
+    )
+
+    if belbin_form.exists():
+        # TODO: buscar una mejor forma de hacer esto
+        # NOTE: quiza se puede agregar el miembro al modelo para eliminar todo en cascada
+        form = BelbinUserProfile.objects.get(
+            member=member.member,
+            group=member.group
+        )
+
+        form.delete()
+
     member.delete()
 
     # https://stackoverflow.com/a/35796330/22015904
@@ -174,33 +189,36 @@ def remove_member(request, integrante_id):
 
 
 @login_required
-def belbin_form(request, username, group_name):
-    user = get_object_or_404(
+def belbin_form(request, admin_username, group_name):
+    admin_user = get_object_or_404(
         User,
-        username=username
+        username=admin_username
     )
 
     group = get_object_or_404(
         Group,
         name=group_name,
-        admin=user
+        admin=admin_user
     )
 
-    integrante = get_object_or_404(
-        Member,
+    belbin_form = BelbinUserProfile.objects.filter(
         member=request.user,
         group=group
     )
 
-    belbin_form = BelbinUserProfile.objects.filter(
-        integrante=integrante
-    )
+    if belbin_form.exists():
+        # si ya se resolvio el formulario mostrar los resultados
+        # https://stackoverflow.com/a/66828392/22015904
+        return redirect(
+            'results',
+            username=admin_username,
+            group_name=group_name
+        )
 
     if request.method != 'POST':
         # Mandar formulario vacio
         return render(request, 'form.html', {
             'form': BelbinForm(),
-            'integrante': integrante,
             'belbin_form': belbin_form
         })
 
@@ -211,13 +229,13 @@ def belbin_form(request, username, group_name):
         # si el formulario es invalido mostrar error
         return render(request, 'form.html', {
             'form': form,
-            'integrante': integrante,
             'belbin_form': belbin_form
         })
 
     # guardar el formulario
     form_save = form.save(commit=False)
-    form_save.integrante = integrante
+    form_save.member = request.user
+    form_save.group = group
     form_save.save()
 
     return redirect('dashboard')
@@ -236,15 +254,10 @@ def form_results(request, username, group_name):
         admin=user
     )
 
-    integrante = get_object_or_404(
-        Member,
-        member=request.user,
-        group=group
-    )
-
     belbinProfile = get_object_or_404(
         BelbinUserProfile,
-        integrante=integrante
+        member=user,
+        group=group
     )
 
     return render(request, 'results.html', {

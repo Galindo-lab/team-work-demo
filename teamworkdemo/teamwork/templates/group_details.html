@@ -6,8 +6,8 @@
 {% comment %} cargar los datos estaticos {% endcomment %}
 {% load static %}
 
-{% block content %}
 
+{% block content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-xl">
         <a class="navbar-brand" href="#">
@@ -28,7 +28,7 @@
 
         <div class="d-flex gap-2">
             <a class="btn btn-primary" href="{% url 'invitation' group.admin group.name %}">
-                Invitacion
+                Generar invitación
             </a>
             
             <a class="btn btn-secondary" href="{% url 'form' user group.name %}">
