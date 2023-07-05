@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.http import HttpResponseNotFound
 
 from django.contrib.auth.decorators import login_required
@@ -168,7 +168,9 @@ def join_group(request,  username, group_name):
 def remove_member(request, integrante_id):
     member = Member.objects.get(id=integrante_id)
     member.delete()
-    return redirect('dashboard')
+
+    # https://stackoverflow.com/a/35796330/22015904
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 @login_required
