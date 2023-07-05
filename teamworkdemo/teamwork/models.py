@@ -73,8 +73,13 @@ class BelbinUserProfile(models.Model):
     formularios realizados
     """
 
-    integrante = models.OneToOneField(
-        Member,
+    member = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    group = models.ForeignKey(
+        Group,
         on_delete=models.CASCADE
     )
 

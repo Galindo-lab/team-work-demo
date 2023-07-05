@@ -186,21 +186,15 @@ def belbin_form(request, username, group_name):
         admin=user
     )
 
-    integrante = get_object_or_404(
-        Member,
-        member=request.user,
-        group=group
-    )
-
     belbin_form = BelbinUserProfile.objects.filter(
-        integrante=integrante
+        member = user,
+        group = group
     )
 
     if request.method != 'POST':
         # Mandar formulario vacio
         return render(request, 'form.html', {
             'form': BelbinForm(),
-            'integrante': integrante,
             'belbin_form': belbin_form
         })
 
@@ -211,13 +205,13 @@ def belbin_form(request, username, group_name):
         # si el formulario es invalido mostrar error
         return render(request, 'form.html', {
             'form': form,
-            'integrante': integrante,
             'belbin_form': belbin_form
         })
 
     # guardar el formulario
     form_save = form.save(commit=False)
-    form_save.integrante = integrante
+    form_save.member = user
+    form_save.group = group
     form_save.save()
 
     return redirect('dashboard')
@@ -236,15 +230,10 @@ def form_results(request, username, group_name):
         admin=user
     )
 
-    integrante = get_object_or_404(
-        Member,
-        member=request.user,
-        group=group
-    )
-
     belbinProfile = get_object_or_404(
         BelbinUserProfile,
-        integrante=integrante
+        member = user,
+        group = group
     )
 
     return render(request, 'results.html', {
