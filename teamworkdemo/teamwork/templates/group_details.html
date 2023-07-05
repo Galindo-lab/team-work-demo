@@ -1,4 +1,89 @@
+{% extends 'layouts/base.html' %}
 
+{% comment %} para agregar el filtro 'render_field' {% endcomment %}
+{% load widget_tweaks %}
+
+{% comment %} cargar los datos estaticos {% endcomment %}
+{% load static %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-xl">
+        <a class="navbar-brand" href="#">
+            Bright TeamWork 
+        </a>
+
+        <a class="btn text-nowrap" href="{% url 'logout' %}">Cerrar sesión</a>
+    </div>
+</nav> 
+
+<div class="row mb-3 justify-content-center">
+
+    <div class="col-md-6">
+
+        <label class="mt-5 mb-4 h5">
+            Informacion de {{ group.name }}
+        </label>
+
+        <div class="d-flex gap-2">
+            <a class="btn btn-primary" href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
+            
+            <a class="btn btn-secondary" href="{% url 'invitation' group.admin group.name %}">Resolver el formulario</a>
+
+            <a class="btn btn-danger ms-auto" href="{% url 'delete' group.id %}">Eliminar grupo</a>
+        </div>
+
+        {% comment %} Tabla de integrantes {% endcomment %}
+        <table class="table mt-5">
+            <thead>
+                <tr class="table-active">
+                <th scope="col" class="w-50">Nombre</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% comment %} Integrantes que todavia no hacen el formulario {% endcomment %}
+                {% for Integrante in members %}
+
+                <tr>
+                    <td>
+                        {{ Integrante.member }}
+                    </td>
+                    <td>
+                        Desconocido
+                    </td>
+                    <td>
+                        <a href="{% url 'remove' Integrante.id %}">Expulsar</a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} 
 {% block content %}
     <h1>Informacion de {{ group.name }} </h1>
 
@@ -29,4 +114,4 @@
         </ul>
     </div>
 
-{% endblock content %}
+{% endblock content %} {% endcomment %}

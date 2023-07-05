@@ -11,10 +11,15 @@ class Profile(models.Model):
     Esta clase permite agregar informacion adicional de los usuarios
     permite extender los perfiles sin modificar User
     """
+
+    # TODO: agregar un campo que represente el perfil global 
+
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE
     )
+
+    
 
 
 class Group(models.Model):

@@ -8,81 +8,60 @@
 
 {% block content %}
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-xl">
-            <a class="navbar-brand" href="#">
-                Bright TeamWork 
-            </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-xl">
+        <a class="navbar-brand" href="#">
+            Bright TeamWork 
+        </a>
 
-            <a class="btn text-nowrap" href="{% url 'logout' %}">Cerrar sesión</a>
-        </div>
-    </nav> 
-
-    <div class="row mb-3 justify-content-center">
-
-        <div class="col-md-6">
-            <label class="mt-5 mb-4 h5">
-                Formularios de {{user}}
-            </label>
-
-            <form method="post" class="input-group">
-                {% csrf_token %}
-                {% render_field creteGroupForm.name class="form-control" placeholder="Nombre del grupo"%}
-                <button class="btn btn-primary text-nowrap">Crear equipo</button>
-            </form>
-
-            {% if creteGroupForm.errors %}
-                <p class="text-danger"> {% render_field creteGroupForm.name.errors.as_text %} </p>
-            {% endif %}
-
-
-            <table class="table mt-5">
-                <thead>
-                  <tr class="table-active">
-                    <th scope="col" class="w-75">Nombre</th>
-                    <th scope="col">Acciones</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                    {% for group in user_groups %}
-
-                    <tr>
-                        <td><a href="{% url 'details' group.id %}"> {{ group.name }} </a></td>
-                        <td> 
-                            <a href="{% url 'delete' group.id %}">Eliminar</a> - 
-                            <a href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-                </tbody>
-
-              </table>
-
-
-
-
-
-
-
-            {% comment %} <div class="m-4">
-                <ul>
-                    {% for group in user_groups %}
-                        <li>
-                            <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div> {% endcomment %}
-
-        </div>
-
-        
-
+        <a class="btn text-nowrap" href="{% url 'logout' %}">Cerrar sesión</a>
     </div>
+</nav> 
+
+<div class="row mb-3 justify-content-center">
+
+    <div class="col-md-6">
+        <label class="mt-5 mb-4 h5">
+            Formularios de {{user}}
+        </label>
+
+        <form method="post" class="input-group">
+            {% csrf_token %}
+            {% render_field creteGroupForm.name class="form-control" placeholder="Nombre del grupo"%}
+            <button class="btn btn-primary text-nowrap">Crear equipo</button>
+        </form>
+
+        {% if creteGroupForm.errors %}
+            <p class="text-danger"> {% render_field creteGroupForm.name.errors.as_text %} </p>
+        {% endif %}
+
+
+        <table class="table mt-5">
+            <thead>
+                <tr class="table-active">
+                <th scope="col" class="w-75">Nombre</th>
+                <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for group in user_groups %}
+                {% comment %} mostrar los grupos {% endcomment %}
+
+                <tr>
+                    <td>
+                        <a href="{% url 'details' group.id %}"> {{ group.name }} </a>
+                    </td>
+                    <td> 
+                        <a href="{% url 'delete' group.id %}">Eliminar</a> - 
+                        <a href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
    
 {% endblock content %}
-
-
-
