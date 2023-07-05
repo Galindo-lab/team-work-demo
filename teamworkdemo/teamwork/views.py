@@ -168,18 +168,18 @@ def remove_member(request, integrante_id):
     member = Member.objects.get(id=integrante_id)
 
     belbin_form = BelbinUserProfile.objects.filter(
-        member = member.member,
-        group = member.group
+        member=member.member,
+        group=member.group
     )
 
     if belbin_form.exists():
         # TODO: buscar una mejor forma de hacer esto
         # NOTE: quiza se puede agregar el miembro al modelo para eliminar todo en cascada
         form = BelbinUserProfile.objects.get(
-            member = member.member,
-            group = member.group
+            member=member.member,
+            group=member.group
         )
-        
+
         form.delete()
 
     member.delete()
@@ -202,9 +202,18 @@ def belbin_form(request, admin_username, group_name):
     )
 
     belbin_form = BelbinUserProfile.objects.filter(
-        member = request.user,
-        group = group
+        member=request.user,
+        group=group
     )
+
+    if belbin_form.exists():
+        # si ya se resolvio el formulario mostrar los resultados
+        # https://stackoverflow.com/a/66828392/22015904
+        return redirect(
+            'results',
+            username=admin_username,
+            group_name=group_name
+        )
 
     if request.method != 'POST':
         # Mandar formulario vacio
@@ -247,8 +256,8 @@ def form_results(request, username, group_name):
 
     belbinProfile = get_object_or_404(
         BelbinUserProfile,
-        member = user,
-        group = group
+        member=user,
+        group=group
     )
 
     return render(request, 'results.html', {
