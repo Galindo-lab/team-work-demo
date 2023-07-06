@@ -9,6 +9,54 @@
 <div class="d-flex flex-column min-vh-100 min-vw-100">
     <div class="d-flex flex-grow-1 justify-content-center align-items-center" >
 
+
+        <div class="card" style="width: 22rem;">
+ 
+            <div class="card-header">
+                Unirse a {{ group.name }}
+            </div>
+
+            <div class="card-body">
+
+                <p class="card-text mb-4">
+                    {% if request.user == group.admin %}
+                        Puedes compartir el enlace a esta pagina para invitar a los miembros
+                    {% else %}
+                        {{ group.admin }} te ha invitado al grupo {{ group.name }}
+                    {% endif %}
+                </p>
+
+                {% if request.user.is_authenticated %}
+
+                    {% if not integrante.exists %}
+
+                        <a class="btn btn-primary text-center w-100" href="{% url 'join' group.admin group.name %}">
+                            Unirse
+                        </a>
+
+                    {% else %}
+                        
+                        <a class="btn btn-primary text-center w-100" href="{% url 'form' group.admin group.name %}">
+                            Resolver el formulario 
+                        </a>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="text-muted" >
+                        Debes <a href="{% url 'login' %}" target="_blank">iniciar sesión</a> o <a href="{% url 'register' %}" target="_blank">crear una cuenta</a>
+                    </div>
+
+                {% endif %}
+                
+            </div>
+
+        </div>
+
+
+{% comment %} 
+
         <div class="row">
 
             <div class="text-center">
@@ -46,7 +94,7 @@
 
             {% endif %}
 
-        </div>
+        </div> {% endcomment %}
     </div>
 </div>
 {% endblock content %}

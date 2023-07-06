@@ -153,13 +153,21 @@ def join_group(request,  username, group_name):
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
-    integrante = Member(
+    
+    member = Member.objects.filter(
         member=request.user,
         group=group
     )
 
-    integrante.save()
+    if not member.exists():
+        integrante = Member(
+            member=request.user,
+            group=group
+        )
 
+        integrante.save()
+
+    # mandarte directo al formulario
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
@@ -199,6 +207,12 @@ def belbin_form(request, admin_username, group_name):
         Group,
         name=group_name,
         admin=admin_user
+    )
+
+    member = get_object_or_404(
+        Member,
+        member=request.user,
+        group=group
     )
 
     belbin_form = BelbinUserProfile.objects.filter(
