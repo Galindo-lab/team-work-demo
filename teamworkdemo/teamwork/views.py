@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.http import HttpResponseNotFound
 
 from django.contrib.auth.decorators import login_required
@@ -172,24 +173,10 @@ def join_group(request,  username, group_name):
 
 @login_required
 def remove_member(request, integrante_id):
-    member = Member.objects.get(id=integrante_id)
+    member = Member.objects.filter(id=integrante_id)
 
-    belbin_form = BelbinUserProfile.objects.filter(
-        member=member.member,
-        group=member.group
-    )
-
-    if belbin_form.exists():
-        # TODO: buscar una mejor forma de hacer esto
-        # NOTE: quiza se puede agregar el miembro al modelo para eliminar todo en cascada
-        form = BelbinUserProfile.objects.get(
-            member=member.member,
-            group=member.group
-        )
-
-        form.delete()
-
-    member.delete()
+    if member.exists():
+        member.first().delete()
 
     # https://stackoverflow.com/a/35796330/22015904
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
@@ -197,7 +184,7 @@ def remove_member(request, integrante_id):
 
 @login_required
 def belbin_form(request, admin_username, group_name):
-    admin_user = get_object_or_404(
+    admin = get_object_or_404(
         User,
         username=admin_username
     )
@@ -205,7 +192,7 @@ def belbin_form(request, admin_username, group_name):
     group = get_object_or_404(
         Group,
         name=group_name,
-        admin=admin_user
+        admin=admin
     )
 
     member = get_object_or_404(
@@ -215,8 +202,7 @@ def belbin_form(request, admin_username, group_name):
     )
 
     belbin_form = BelbinUserProfile.objects.filter(
-        member=request.user,
-        group=group
+        member=member
     )
 
     if belbin_form.exists():
@@ -247,8 +233,7 @@ def belbin_form(request, admin_username, group_name):
 
     # guardar el formulario
     form_save = form.save(commit=False)
-    form_save.member = request.user
-    form_save.group = group
+    form_save.member = member
     form_save.save()
 
     return redirect('dashboard')
@@ -256,21 +241,10 @@ def belbin_form(request, admin_username, group_name):
 
 @login_required
 def form_results(request, username, group_name):
-    user = get_object_or_404(
-        User,
-        username=username
-    )
-
-    group = get_object_or_404(
-        Group,
-        name=group_name,
-        admin=user
-    )
-
-    belbin_form = BelbinUserProfile.objects.get(
-        member=request.user,
-        group=group
-    )
+    admin = get_object_or_404(User,username=username)
+    group = get_object_or_404(Group,name=group_name,admin=admin)
+    member = get_object_or_404(Member,member=request.user,group=group)
+    belbin_form = get_object_or_404(BelbinUserProfile,member=member)
 
     return render(request, 'results.html', {
         'profile': belbin_form

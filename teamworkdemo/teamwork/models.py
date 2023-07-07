@@ -67,16 +67,13 @@ class Member(models.Model):
 
     def profiles(self):
         profiles = BelbinUserProfile.objects.filter(
-            member=self.member,
-            group=self.group
+            member=self
         )
 
         if not profiles.exists():
             return []
-        
+
         return profiles.first().results()
-
-
 
 
 class BelbinUserProfile(models.Model):
@@ -85,14 +82,7 @@ class BelbinUserProfile(models.Model):
     """
 
     # datos del usuario
-    member = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE
-    )
-    group = models.ForeignKey(
-        Group,
-        on_delete=models.CASCADE
-    )
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(
         default=timezone.now
     )
@@ -161,12 +151,12 @@ class BelbinUserProfile(models.Model):
         ])
 
         # lista con los nombres de los perfiles más altos
-        a =  self.to_dict()
+        a = self.to_dict()
 
         b = [k for k in a if a[k] == max_value]
 
         return b
-    
+
     def to_dict(self):
         """extrae los valores de cada perfil y los retona como un diccionario
 
@@ -184,7 +174,6 @@ class BelbinUserProfile(models.Model):
             "implementer": self.implementer,
             "completer_finisher": self.completer_finisher,
         }
-
 
     def json_profiles(self):
         """retorna los datos en forma de json
