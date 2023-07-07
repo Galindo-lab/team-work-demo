@@ -153,7 +153,6 @@ def join_group(request,  username, group_name):
     user = get_object_or_404(User, username=username)
     group = get_object_or_404(Group, name=group_name, admin=user)
 
-    
     member = Member.objects.filter(
         member=request.user,
         group=group
@@ -268,12 +267,12 @@ def form_results(request, username, group_name):
         admin=user
     )
 
-    belbinProfile = get_object_or_404(
-        BelbinUserProfile,
-        member=user,
+    belbin_form = BelbinUserProfile.objects.get(
+        member=request.user,
         group=group
     )
 
+
     return render(request, 'results.html', {
-        'profile': belbinProfile
+        'profile': belbin_form
     })
