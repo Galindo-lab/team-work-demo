@@ -272,7 +272,6 @@ def form_results(request, username, group_name):
         group=group
     )
 
-
     return render(request, 'results.html', {
         'profile': belbin_form
     })
