@@ -83,45 +83,51 @@ class BelbinUserProfile(models.Model):
 
     # datos del usuario
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(
-        default=timezone.now
-    )
+    timestamp = models.DateTimeField(default=timezone.now)
 
     # perfiles de belbin
     resource_investigator = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+
     team_worker = models.IntegerField(
         default=0,
         validators=[
             MinValueValidator(0)
         ]
     )
+
     coordinator = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+
     plant = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+
     monitor_evaluator = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+
     specialist = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+
     shaper = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+
     implementer = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
+    
     completer_finisher = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
