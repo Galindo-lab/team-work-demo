@@ -10,7 +10,7 @@
 {% block content %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-xl">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">
             Bright TeamWork 
         </a>
 
@@ -59,7 +59,7 @@
                         {{ Integrante.member }}
                     </td>
                     <td>
-                        Desconocido
+                        {{ Integrante.profiles }}
                     </td>
                     <td>
                         <a href="{% url 'remove' Integrante.id %}">Expulsar</a>
@@ -75,49 +75,3 @@
 </div>
 
 {% endblock content %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% comment %} 
-{% block content %}
-    <h1>Informacion de {{ group.name }} </h1>
-
-    <h2>Integrantes</h2>
-    <ul>
-        {% for Integrante in members %}
-            <li>
-               {{ Integrante.member }} - <a href="{% url 'remove' Integrante.id %}">Expulsar</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-
-    <div>
-        <h2>Acciones</h2>
-        <ul>
-            <li>
-                <a href="{% url 'invitation' group.admin group.name %}">Invitacion</a>
-            </li>
-
-            <li>
-                <a href="{% url 'delete' group.id %}">Elimar grupo</a>
-            </li>
-
-            <li>
-                <a href="{% url 'invitation' group.admin group.name %}">Resolver el formulario</a>
-            </li>
-        </ul>
-    </div>
-
-{% endblock content %} {% endcomment %}

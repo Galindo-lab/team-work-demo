@@ -12,14 +12,12 @@ class Profile(models.Model):
     permite extender los perfiles sin modificar User
     """
 
-    # TODO: agregar un campo que represente el perfil global 
+    # TODO: agregar un campo que represente el perfil global
 
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE
     )
-
-    
 
 
 class Group(models.Model):
@@ -67,25 +65,25 @@ class Member(models.Model):
             ('member', 'group'),
         )
 
+    def profiles(self):
+        profiles = BelbinUserProfile.objects.filter(
+            member=self
+        )
+
+        if not profiles.exists():
+            return []
+
+        return profiles.first().results()
+
 
 class BelbinUserProfile(models.Model):
     """
     formularios realizados
     """
 
-    member = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE
-    )
-
-    group = models.ForeignKey(
-        Group,
-        on_delete=models.CASCADE
-    )
-
-    timestamp = models.DateTimeField(
-        default=timezone.now
-    )
+    # datos del usuario
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
 
     # perfiles de belbin
     resource_investigator = models.IntegerField(
@@ -129,15 +127,49 @@ class BelbinUserProfile(models.Model):
         default=0,
         validators=[MinValueValidator(0)]
     )
-
+    
     completer_finisher = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)]
     )
 
-    def json_profiles(self):
+    # metadatos de la calse
+    class Meta:
+        ordering = ['-timestamp']
 
-        diccionario = {
+    def results(self):
+        """Retorna la lista de los perfiles mas altos
+
+        Returns:
+            list: lista con los perfiles
+        """
+
+        max_value = max([
+            self.resource_investigator,
+            self.team_worker,
+            self.coordinator,
+            self.plant,
+            self.monitor_evaluator,
+            self.specialist,
+            self.shaper,
+            self.implementer,
+            self.completer_finisher,
+        ])
+
+        # lista con los nombres de los perfiles más altos
+        a = self.to_dict()
+
+        b = [k for k in a if a[k] == max_value]
+
+        return b
+
+    def to_dict(self):
+        """extrae los valores de cada perfil y los retona como un diccionario
+
+        Returns:
+            dict: resultado para cada perfil
+        """
+        return {
             "resource_investigator": self.resource_investigator,
             "team_worker": self.team_worker,
             "coordinator": self.coordinator,
@@ -149,7 +181,10 @@ class BelbinUserProfile(models.Model):
             "completer_finisher": self.completer_finisher,
         }
 
-        return json.dumps(diccionario)
+    def json_profiles(self):
+        """retorna los datos en forma de json
 
-    class Meta:
-        ordering = ['-timestamp']
+        Returns:
+            string: json de los puntos que dan los perfiles 
+        """
+        return json.dumps(self.to_dict())
