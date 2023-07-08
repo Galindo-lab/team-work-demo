@@ -6,6 +6,7 @@
 git clone https://github.com/Galindo-lab/team-work-demo.git
 cd team-work-demo
 python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
