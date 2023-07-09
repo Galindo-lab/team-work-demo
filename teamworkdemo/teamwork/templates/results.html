@@ -39,24 +39,24 @@
         {% endif %}
 
         {% if 'specialist' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #bfbb98;" href="https://www.belbin.es/roles-de-equipo/especialista/">
+                Especialista
+            </a>
+        {% endif %}
+
+        {% if 'monitor_evaluator' in profile.member.profiles %}
             <a class="p-3 mb-2 text-white rounded" style="background-color: #aea5b7;" href="https://www.belbin.es/roles-de-equipo/monitor-evaluador/">
                 Monitor Evaluador
             </a>
         {% endif %}
 
         {% if 'shaper' in profile.member.profiles %}
-            <a class="p-3 mb-2 text-white rounded" style="background-color: #bfbb98;" href="https://www.belbin.es/roles-de-equipo/especialista/">
-                Especialista
-            </a>
-        {% endif %}
-
-        {% if 'implementer' in profile.member.profiles %}
             <a class="p-3 mb-2 text-white rounded" style="background-color: #bd4432;" href="https://www.belbin.es/roles-de-equipo/impulsor/">
                 Impulsor
             </a>
         {% endif %}
 
-        {% if 'completer_finisher' in profile.member.profiles %}
+        {% if 'implementer' in profile.member.profiles %}
             <a class="p-3 mb-2 text-white rounded" style="background-color: #4a659a;" href="https://www.belbin.es/roles-de-equipo/implementador/">
                 Implementador
             </a>
