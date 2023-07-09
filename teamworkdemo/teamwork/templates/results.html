@@ -1,53 +1,207 @@
+{% extends 'layouts/base.html' %}
 
+{% comment %} para agregar el filtro 'render_field' {% endcomment %}
+{% load widget_tweaks %}
+
+{% comment %} cargar los datos estaticos {% endcomment %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 
-    <script src="{% static 'scripts/vue/vue.js' %}"></script>
-</head>
-<body>
+{% block content %}
+<div class="d-flex mb-3 justify-content-center">
+  <div class="col-md-7">
+
+    <h1 class="mt-5">Roles altos</h1>
+    
+    
+    {% if profile.member.profiles|length > 1 %}
+    <div class="alert alert-warning my-3 mb-5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+      </svg>
+      
+      El orden de aparición de los datos no tiene ningún significado
+    </div>
+    {% endif %}
+
+    
 
 
-    <div id="results">
-        <div>Clave máxima: [[ maxKey ]] </div>
-        <div>Valor máximo: [[maxValue]] </div>
+    <div class="column">
+      {% if 'resource_investigator' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #a83d72;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/investigador-de-recursos/" >
+          Investigador de Recursos
+        </a>
+      </div>
+      {% endif %}
+
+      {% if 'team_worker' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #80b462;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/cohesionador/">
+          Cohesionador
+        </a>
+      </div>
+      {% endif %}
+
+      {% if 'coordinator' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #93b3d5;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/coordinador/">
+          Coordinador
+        </a>
+      </div>
+      {% endif %}
+
+      {% if 'plant' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #edd95c;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/cerebro/">
+          Cerebro
+        </a>
+      </div>
+      
+      {% endif %}
+
+      {% if 'specialist' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #bfbb98;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/especialista/">
+          Especialista
+        </a>
+      </div>
+      
+      {% endif %}
+
+      {% if 'monitor_evaluator' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #aea5b7;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/monitor-evaluador/">
+          Monitor Evaluador
+        </a>
+      </div>
+      
+      {% endif %}
+
+      {% if 'shaper' in profile.member.profiles %}
+      <div class="mb-2 p-2 text-white rounded" style="background-color: #bd4432;">
+        <a class="text-light" href="https://www.belbin.es/roles-de-equipo/impulsor/">
+          Impulsor
+        </a>
+      </div>
+      {% endif %}
+
+      {% if 'implementer' in profile.member.profiles %}
+        <div class="mb-2 p-2 text-white rounded" style="background-color: #4a659a;">
+          <a class="text-light" href="https://www.belbin.es/roles-de-equipo/implementador/">
+            Implementador
+          </a>
+        </div>
+      {% endif %}
+
+      {% if 'completer_finisher' in profile.member.profiles %}
+        <div class="mb-2 p-2 text-white rounded" style="background-color: #844932;">
+          <a class="text-light" href="https://www.belbin.es/roles-de-equipo/finalizador/">
+            Finalizador
+          </a>
+        </div>
+      {% endif %}
     </div>
 
-   
+    <h3 class="mt-5">Resultados detallados</h3>
 
-    <script>
-        new Vue({
-            delimiters: ['[[', ']]'],
-            el: '#results',
-            data: {
-                // Parsea el JSON y asigna a la variable jsonData
-                jsonData: JSON.parse("{{ profile.json_profiles|escapejs }}"), 
-                maxKey: '',
-                maxValue: 0 
-            },
+    <table class="table mt-3">
+      <thead>
+          <tr class="table-active">
+          <th scope="col" class="w-50">Perfil</th>
+          <th scope="col">Total de puntos</th>
+          </tr>
+      </thead>
 
-            created() {
-                this.findMaxValue();
-            },
+      <tbody>
+          {% comment %} Integrantes que todavia no hacen el formulario {% endcomment %}
+          <tr>
+              <td>
+                Investigador de Recursos
+              </td>
+              <td>
+                {{ profile.resource_investigator }}
+              </td>
+          </tr>
 
-            methods: {
-                findMaxValue() {
-                  const entries = Object.entries(this.jsonData);
-                  for (const [key, value] of entries) {
-                    if (value > this.maxValue) {
-                      this.maxValue = value;
-                      this.maxKey = key;
-                    }
-                  }
-                }
-            }
-              
-        })
-    </script>
-</body>
-</html>
+          <tr>
+            <td>
+              Cohesionador
+            </td>
+            <td>
+              {{ profile.team_worker }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Coordinador
+            </td>
+            <td>
+              {{ profile.coordinator }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Cerebro
+            </td>
+            <td>
+              {{ profile.plant }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Especialista
+            </td>
+            <td>
+              {{ profile.specialist }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Monitor Evaluador
+            </td>
+            <td>
+              {{ profile.monitor_evaluator }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Impulsor
+            </td>
+            <td>
+              {{ profile.shaper }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Implementador
+            </td>
+            <td>
+              {{ profile.implementer }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              Finalizador
+            </td>
+            <td>
+              {{ profile.completer_finisher }}
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+      {% comment %} detalladas {% endcomment %}
+      {% comment %} {{ profile.to_dict }} {% endcomment %}
+
+  </div>
+</div>
+{% endblock content %}

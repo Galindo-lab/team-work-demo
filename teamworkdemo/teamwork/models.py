@@ -16,8 +16,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(
         User,
-        on_delete=models.CASCADE
-    )
+        on_delete=models.CASCADE)
 
 
 class Group(models.Model):
@@ -25,22 +24,18 @@ class Group(models.Model):
     Modelo para representar un grupo al que se puede integrar un miembro
     """
     name = models.CharField(
-        max_length=200
-    )
+        max_length=200)
 
     admin = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='group_admin'
-    )
+        related_name='group_admin')
 
     class Meta:
         # permite que haya nombre repetidos mientras el administrador
         # no sea el mismo
 
-        unique_together = (
-            ('name', 'admin'),
-        )
+        unique_together = (('name', 'admin'))
 
 
 class Member(models.Model):
@@ -51,24 +46,19 @@ class Member(models.Model):
     member = models.ForeignKey(
         User,
         related_name='group_member',
-        on_delete=models.CASCADE
-    )
+        on_delete=models.CASCADE)
 
     group = models.ForeignKey(
         Group,
         related_name='members',
-        on_delete=models.CASCADE
-    )
+        on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = (
-            ('member', 'group'),
-        )
+        unique_together = (('member', 'group'))
 
     def profiles(self):
         profiles = BelbinUserProfile.objects.filter(
-            member=self
-        )
+            member=self)
 
         if not profiles.exists():
             return []
@@ -88,50 +78,39 @@ class BelbinUserProfile(models.Model):
     # perfiles de belbin
     resource_investigator = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     team_worker = models.IntegerField(
         default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+        validators=[MinValueValidator(0)])
 
     coordinator = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     plant = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     monitor_evaluator = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     specialist = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     shaper = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     implementer = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
     
     completer_finisher = models.IntegerField(
         default=0,
-        validators=[MinValueValidator(0)]
-    )
+        validators=[MinValueValidator(0)])
 
     # metadatos de la calse
     class Meta:
