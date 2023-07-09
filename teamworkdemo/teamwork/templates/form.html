@@ -10,7 +10,7 @@
 {% block content %}
 <div class="d-flex mb-3 justify-content-center">
 
-  <div class="" style="max-width:60rem;">
+  <div class="" style="max-width:50rem;">
     <div class="alert alert-primary my-5">
 
       <div>
@@ -65,7 +65,7 @@
 
         <div v-for="question in section.questions" :key="question.id" class="mt-2 d-flex gap-2 border rounded">
           <label class="p-3 ">[[ question.label ]]</label>
-          <input type="number" v-model.number="question.points" class="ms-auto text-center border-0">
+          <input min="0" type="number" v-model.number="question.points" class="ms-auto text-center border-0">
         </div>
         
       </div>
