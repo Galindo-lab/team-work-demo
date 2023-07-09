@@ -1,53 +1,79 @@
+{% extends 'layouts/base.html' %}
 
+{% comment %} para agregar el filtro 'render_field' {% endcomment %}
+{% load widget_tweaks %}
+
+{% comment %} cargar los datos estaticos {% endcomment %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 
-    <script src="{% static 'scripts/vue/vue.js' %}"></script>
-</head>
-<body>
+{% block content %}
+<div class="d-flex mb-3 justify-content-center">
+    <div class="col-md-7">
 
+    <h1 class="my-5">Resultados</h1>
 
-    <div id="results">
-        <div>Clave máxima: [[ maxKey ]] </div>
-        <div>Valor máximo: [[maxValue]] </div>
+    <div class="row">
+        {% if 'resource_investigator' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #a83d72;" href="https://www.belbin.es/roles-de-equipo/investigador-de-recursos/" >
+                Investigador de Recursos
+            </a>
+        {% endif %}
+
+        {% if 'team_worker' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #80b462;" href="https://www.belbin.es/roles-de-equipo/cohesionador/">
+                Cohesionador
+            </a>
+        {% endif %}
+
+        {% if 'coordinator' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #93b3d5;" href="https://www.belbin.es/roles-de-equipo/coordinador/">
+                Coordinador
+            </a>
+        {% endif %}
+
+        {% if 'plant' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #edd95c;" href="https://www.belbin.es/roles-de-equipo/cerebro/">
+                Cerebro
+            </a>
+        {% endif %}
+
+        {% if 'specialist' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #aea5b7;" href="https://www.belbin.es/roles-de-equipo/monitor-evaluador/">
+                Monitor Evaluador
+            </a>
+        {% endif %}
+
+        {% if 'shaper' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #bfbb98;" href="https://www.belbin.es/roles-de-equipo/especialista/">
+                Especialista
+            </a>
+        {% endif %}
+
+        {% if 'implementer' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #bd4432;" href="https://www.belbin.es/roles-de-equipo/impulsor/">
+                Impulsor
+            </a>
+        {% endif %}
+
+        {% if 'completer_finisher' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #4a659a;" href="https://www.belbin.es/roles-de-equipo/implementador/">
+                Implementador
+            </a>
+        {% endif %}
+
+        {% if 'completer_finisher' in profile.member.profiles %}
+            <a class="p-3 mb-2 text-white rounded" style="background-color: #844932;" href="https://www.belbin.es/roles-de-equipo/finalizador/">
+                Finalizador
+            </a>
+        {% endif %}
     </div>
 
-   
 
-    <script>
-        new Vue({
-            delimiters: ['[[', ']]'],
-            el: '#results',
-            data: {
-                // Parsea el JSON y asigna a la variable jsonData
-                jsonData: JSON.parse("{{ profile.json_profiles|escapejs }}"), 
-                maxKey: '',
-                maxValue: 0 
-            },
 
-            created() {
-                this.findMaxValue();
-            },
+    {% comment %} detalladas {% endcomment %}
+    {% comment %} {{ profile.to_dict }} {% endcomment %}
 
-            methods: {
-                findMaxValue() {
-                  const entries = Object.entries(this.jsonData);
-                  for (const [key, value] of entries) {
-                    if (value > this.maxValue) {
-                      this.maxValue = value;
-                      this.maxKey = key;
-                    }
-                  }
-                }
-            }
-              
-        })
-    </script>
-</body>
-</html>
+    
+</div>
+{% endblock content %}
