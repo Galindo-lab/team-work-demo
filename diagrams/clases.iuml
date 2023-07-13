@@ -1,0 +1,47 @@
+@startuml
+!theme plain
+
+class BelbinUserProfile {
+    member: Member
+    timestamp: DateTime
+    resource_investigator: Integer
+    team_worker: Integer
+    coordinator: Integer
+    plant: Integer
+    monitor_evaluator: Integer
+    specialist: Integer
+    shaper: Integer
+    implementer: Integer
+    completer_finisher: Integer
+    + get_highest_profiles(): List<String>
+    + to_json(): String
+}
+
+class User {
+    username: String
+    password: String
+    email: String
+    ...
+}
+
+class Profile {
+    user: User
+}
+
+class Group {
+    name: String
+    admin: User
+}
+
+class Member {
+    user: User
+    group: Group
+}
+
+
+User "1" -- "1" Profile
+Group "1" -- "*" Member
+User "1" -- "*" Member
+Member "1" -- "*" BelbinUserProfile
+
+@enduml

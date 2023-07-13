@@ -55,7 +55,7 @@ def dashboard(request):
     )
 
     # grupos creados por el usuario
-    user_groups = user.group_admin.all()
+    user_groups = user.administered_groups.all()
 
     # grupos a los que el usuario pertenece
     user_member = user.group_member.all()
@@ -82,8 +82,7 @@ def dashboard(request):
     # https://stackoverflow.com/a/30049925/22015904
     group = Group.objects.filter(
         name=form.cleaned_data['name'],
-        admin=request.user
-    )
+        admin=request.user)
 
     if group.exists():
         # https://stackoverflow.com/a/60258267/22015904
@@ -139,8 +138,7 @@ def invitation_request(request, username, group_name):
 
     integrante = Member.objects.filter(
         member=request.user,
-        group=group
-    )
+        group=group)
 
     # mostrar el estado
     return render(request, 'join_group.html', {
@@ -156,14 +154,12 @@ def join_group(request,  username, group_name):
 
     member = Member.objects.filter(
         member=request.user,
-        group=group
-    )
+        group=group)
 
     if not member.exists():
         integrante = Member(
             member=request.user,
-            group=group
-        )
+            group=group)
 
         integrante.save()
 
@@ -186,24 +182,20 @@ def remove_member(request, integrante_id):
 def belbin_form(request, admin_username, group_name):
     admin = get_object_or_404(
         User,
-        username=admin_username
-    )
+        username=admin_username)
 
     group = get_object_or_404(
         Group,
         name=group_name,
-        admin=admin
-    )
+        admin=admin)
 
     member = get_object_or_404(
         Member,
         member=request.user,
-        group=group
-    )
+        group=group)
 
     belbin_form = BelbinUserProfile.objects.filter(
-        member=member
-    )
+        member=member)
 
     if belbin_form.exists():
         # si ya se resolvio el formulario mostrar los resultados
@@ -211,8 +203,7 @@ def belbin_form(request, admin_username, group_name):
         return redirect(
             'results',
             username=admin_username,
-            group_name=group_name
-        )
+            group_name=group_name)
 
     if request.method != 'POST':
         # Mandar formulario vacio
