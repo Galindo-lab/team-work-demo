@@ -13,6 +13,7 @@ class Profile(models.Model):
     """
 
     # TODO: agregar un campo que represente el perfil global
+    # TODO: agregar un campo para representar la opinion de los demas repecto a ti
 
     user = models.OneToOneField(
         User,
@@ -29,7 +30,7 @@ class Group(models.Model):
     admin = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='group_admin')
+        related_name='administered_groups')
 
     class Meta:
         # permite que haya nombre repetidos mientras el administrador
@@ -71,6 +72,16 @@ class BelbinUserProfile(models.Model):
     formularios realizados
     """
 
+    RESOURCE_INVESTIGATOR = 'resource_investigator'
+    TEAM_WORKER = 'team_worker'
+    COORDINATOR = 'coordinator'
+    PLANT = 'plant'
+    MONITOR_EVALUATOR = 'monitor_evaluator'
+    SPECIALIST = 'specialist'
+    SHAPER = 'shaper'
+    IMPLEMENTER = 'implementer'
+    COMPLETER_FINISHER = 'completer_finisher'
+
     # datos del usuario
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now)
@@ -107,7 +118,7 @@ class BelbinUserProfile(models.Model):
     implementer = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)])
-    
+
     completer_finisher = models.IntegerField(
         default=0,
         validators=[MinValueValidator(0)])
@@ -123,7 +134,7 @@ class BelbinUserProfile(models.Model):
             list: lista con los perfiles
         """
 
-        max_value = max([
+        max_value = max(
             self.resource_investigator,
             self.team_worker,
             self.coordinator,
@@ -133,7 +144,7 @@ class BelbinUserProfile(models.Model):
             self.shaper,
             self.implementer,
             self.completer_finisher,
-        ])
+        )
 
         # lista con los nombres de los perfiles más altos
         a = self.to_dict()
@@ -159,11 +170,3 @@ class BelbinUserProfile(models.Model):
             "implementer": self.implementer,
             "completer_finisher": self.completer_finisher,
         }
-
-    def json_profiles(self):
-        """retorna los datos en forma de json
-
-        Returns:
-            string: json de los puntos que dan los perfiles 
-        """
-        return json.dumps(self.to_dict())
