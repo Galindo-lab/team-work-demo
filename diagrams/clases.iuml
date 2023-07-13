@@ -1,6 +1,22 @@
 @startuml
 !theme plain
 
+class BelbinUserProfile {
+    member: Member
+    timestamp: DateTime
+    resource_investigator: Integer
+    team_worker: Integer
+    coordinator: Integer
+    plant: Integer
+    monitor_evaluator: Integer
+    specialist: Integer
+    shaper: Integer
+    implementer: Integer
+    completer_finisher: Integer
+    + get_highest_profiles(): List<String>
+    + to_json(): String
+}
+
 class User {
     username: String
     password: String
@@ -22,25 +38,10 @@ class Member {
     group: Group
 }
 
-class BelbinUserProfile {
-    member: Member
-    timestamp: DateTime
-    resource_investigator: Integer
-    team_worker: Integer
-    coordinator: Integer
-    plant: Integer
-    monitor_evaluator: Integer
-    specialist: Integer
-    shaper: Integer
-    implementer: Integer
-    completer_finisher: Integer
-    + get_highest_profiles(): List<String>
-    + to_json(): String
-}
 
 User "1" -- "1" Profile
-Group "1" -- "n" Member
-User "1" -- "n" Member
-Member "1" -- "n" BelbinUserProfile
+Group "1" -- "*" Member
+User "1" -- "*" Member
+Member "1" -- "*" BelbinUserProfile
 
 @enduml
