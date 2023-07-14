@@ -51,8 +51,7 @@ def register(request):
 def dashboard(request):
     # Mostrar el dashboard normal
     user = User.objects.get(
-        username=request.user.username
-    )
+        username=request.user.username)
 
     # grupos creados por el usuario
     user_groups = user.administered_groups.all()
