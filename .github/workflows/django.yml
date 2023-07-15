@@ -27,4 +27,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python ~/teamworkdemo/manage.py test teamwork
+        python ~/team-work-demo/teamworkdemo/manage.py test teamwork
