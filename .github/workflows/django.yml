@@ -28,4 +28,4 @@ jobs:
     - name: Run Tests
       run: |
         cd $(dirname $(find . -type f -name manage.py))
-        python ~/teamworkdemo/manage.py test teamwork
+        python manage.py test teamwork
