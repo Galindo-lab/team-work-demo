@@ -25,6 +25,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-#    - name: Run Tests
-#      run: |
-#        python manage.py test
+    - name: Run Tests
+      run: |
+        cd $(dirname $(find . -type f -name manage.py))
+        python manage.py makemigrations teamwork
+        python manage.py migrate
+        python manage.py test teamwork
