@@ -28,4 +28,4 @@ jobs:
     - name: Run Tests
       run: |
         dir
-        python ~/team-work-demo/teamworkdemo/manage.py test teamwork
+        python ~/teamworkdemo/teamworkdemo/manage.py test teamwork
