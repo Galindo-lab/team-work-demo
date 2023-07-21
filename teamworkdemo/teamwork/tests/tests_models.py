@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.test import TestCase
-from teamwork.models import Profile, Group, Member, BelbinUserProfile
+from teamwork.models import Profile, Group, Member, ProfileForm
 
 
 class ProfileModelTest(TestCase):
@@ -35,7 +35,7 @@ class BelbinUserProfileModelTest(TestCase):
         self.member = Member.objects.create(member=self.user, group=self.group)
 
     def test_belbin_user_profile_creation(self):
-        belbin_profile = BelbinUserProfile.objects.create(
+        belbin_profile = ProfileForm.objects.create(
             member=self.member,
             resource_investigator=1,
             team_worker=2,
@@ -59,7 +59,7 @@ class BelbinUserProfileModelTest(TestCase):
         self.assertEqual(belbin_profile.completer_finisher, 9)
 
     def test_belbin_user_profile_results(self):
-        belbin_profile = BelbinUserProfile.objects.create(
+        belbin_profile = ProfileForm.objects.create(
             member=self.member,
             resource_investigator=1,
             team_worker=2,
@@ -74,10 +74,10 @@ class BelbinUserProfileModelTest(TestCase):
         expected_results = [
             'completer_finisher'
         ]
-        self.assertEqual(belbin_profile.results(), expected_results)
+        self.assertEqual(belbin_profile.primary_roles(), expected_results)
 
     def test_belbin_user_profile_to_dict(self):
-        belbin_profile = BelbinUserProfile.objects.create(
+        belbin_profile = ProfileForm.objects.create(
             member=self.member,
             resource_investigator=1,
             team_worker=2,

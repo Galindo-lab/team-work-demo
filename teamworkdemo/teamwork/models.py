@@ -1,3 +1,4 @@
+from enum import Enum
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -56,33 +57,26 @@ class Member(models.Model):
         unique_together = (('member', 'group'))
 
     def profiles(self):
-        profiles = BelbinUserProfile.objects.filter(
+        profiles = ProfileForm.objects.filter(
             member=self)
 
         if not profiles.exists():
             return []
 
-        return profiles.first().results()
+        return profiles.first().primary_roles()
 
 
-class BelbinUserProfile(models.Model):
-    """
-    formularios realizados
-    """
-
-    RESOURCE_INVESTIGATOR = 'resource_investigator'
-    TEAM_WORKER = 'team_worker'
-    COORDINATOR = 'coordinator'
-    PLANT = 'plant'
-    MONITOR_EVALUATOR = 'monitor_evaluator'
-    SPECIALIST = 'specialist'
-    SHAPER = 'shaper'
-    IMPLEMENTER = 'implementer'
-    COMPLETER_FINISHER = 'completer_finisher'
-
-    # datos del usuario
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now)
+class BelbinProfile(models.Model):
+    class Roles(Enum):
+        RESOURCE_INVESTIGATOR = 'resource_investigator'
+        TEAM_WORKER = 'team_worker'
+        COORDINATOR = 'coordinator'
+        PLANT = 'plant'
+        MONITOR_EVALUATOR = 'monitor_evaluator'
+        SPECIALIST = 'specialist'
+        SHAPER = 'shaper'
+        IMPLEMENTER = 'implementer'
+        COMPLETER_FINISHER = 'completer_finisher'
 
     # perfiles de belbin
     resource_investigator = models.IntegerField(
@@ -121,11 +115,7 @@ class BelbinUserProfile(models.Model):
         default=0,
         validators=[MinValueValidator(0)])
 
-    # metadatos de la calse
-    class Meta:
-        ordering = ['-timestamp']
-
-    def results(self):
+    def primary_roles(self):
         """Retorna la lista de los perfiles mas altos
 
         Returns:
@@ -168,3 +158,18 @@ class BelbinUserProfile(models.Model):
             "implementer": self.implementer,
             "completer_finisher": self.completer_finisher,
         }
+
+
+class ProfileForm(BelbinProfile):
+    """
+    formularios realizados
+    """
+
+    # datos del usuario
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    # metadatos de la calse
+
+    class Meta:
+        ordering = ['-timestamp']

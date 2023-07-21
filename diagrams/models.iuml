@@ -1,0 +1,63 @@
+@startuml
+!theme plain
+left to right direction
+
+class User {
+    + id: Integer
+    + username: String
+    + ...
+}
+
+class ResultsStadistics {
+    + user: User
+}
+
+class Group {
+    + name: String
+    + admin: User
+}
+
+class Member {
+    + member: User
+    + group: Group
+}
+
+class BelbinProfile {
+    RESOURCE_INVESTIGATOR
+    TEAM_WORKER
+    COORDINATOR
+    PLANT
+    MONITOR_EVALUATOR
+    SPECIALIST
+    SHAPER
+    IMPLEMENTER
+    COMPLETER_FINISHER
+    + resource_investigator: Integer
+    + team_worker: Integer
+    + coordinator: Integer
+    + plant: Integer
+    + monitor_evaluator: Integer
+    + specialist: Integer
+    + shaper: Integer
+    + implementer: Integer
+    + completer_finisher: Integer
+    + results(): List
+    + to_dict(): Dict
+}
+
+class ProfileForm {
+    + member: Member
+    + timestamp: DateTime
+}
+
+User "1" -- "1" ResultsStadistics : has
+User "1" -- "n" Group : administers
+User "1" -- "n" Member : is
+
+Group "1" -- "n" Member : has 
+
+
+Member "1" -- "1" ProfileForm : has
+BelbinProfile --|> ProfileForm
+BelbinProfile --|> ResultsStadistics
+@enduml
