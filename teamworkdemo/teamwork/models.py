@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MinValueValidator
+from django.forms.models import model_to_dict
 
 
 class Profile(models.Model):
@@ -42,7 +43,6 @@ class Member(models.Model):
     """
     Relaciona los miembros con los grupos 
     """
-
     member = models.ForeignKey(
         User,
         related_name='group_member',
@@ -122,42 +122,14 @@ class BelbinProfile(models.Model):
             list: lista con los perfiles
         """
 
-        max_value = max(
-            self.resource_investigator,
-            self.team_worker,
-            self.coordinator,
-            self.plant,
-            self.monitor_evaluator,
-            self.specialist,
-            self.shaper,
-            self.implementer,
-            self.completer_finisher,
-        )
+        roles = model_to_dict(
+            self,
+            fields=[role.value for role in BelbinProfile.Roles])
 
-        # lista con los nombres de los perfiles más altos
-        a = self.to_dict()
+        max_value = max(roles.values())
+        primary = [key for key in roles if roles[key] == max_value]
 
-        b = [k for k in a if a[k] == max_value]
-
-        return b
-
-    def to_dict(self):
-        """extrae los valores de cada perfil y los retona como un diccionario
-
-        Returns:
-            dict: resultado para cada perfil
-        """
-        return {
-            "resource_investigator": self.resource_investigator,
-            "team_worker": self.team_worker,
-            "coordinator": self.coordinator,
-            "plant": self.plant,
-            "monitor_evaluator": self.monitor_evaluator,
-            "specialist": self.specialist,
-            "shaper": self.shaper,
-            "implementer": self.implementer,
-            "completer_finisher": self.completer_finisher,
-        }
+        return primary
 
 
 class ProfileForm(BelbinProfile):
