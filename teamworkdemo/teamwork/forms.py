@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from .models import Profile, Group, BelbinUserProfile
+from .models import Profile, Group, ProfileForm
 
 
 class UserLoginForm(AuthenticationForm):
@@ -48,7 +48,7 @@ class CreateGroupForm(forms.ModelForm):
 class BelbinForm(forms.ModelForm):
 
     class Meta:
-        model = BelbinUserProfile
+        model = ProfileForm
         fields = [
             'resource_investigator',
             'team_worker',

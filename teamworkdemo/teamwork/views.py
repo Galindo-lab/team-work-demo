@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404
 from . models import Group
 from . models import Member
 from . models import Profile
-from . models import BelbinUserProfile
+from . models import ProfileForm
 
 from . forms import UserRegisterForm
 from . forms import CreateGroupForm
@@ -193,7 +193,7 @@ def belbin_form(request, admin_username, group_name):
         member=request.user,
         group=group)
 
-    belbin_form = BelbinUserProfile.objects.filter(
+    belbin_form = ProfileForm.objects.filter(
         member=member)
 
     if belbin_form.exists():
@@ -231,10 +231,10 @@ def belbin_form(request, admin_username, group_name):
 
 @login_required
 def form_results(request, username, group_name):
-    admin = get_object_or_404(User,username=username)
-    group = get_object_or_404(Group,name=group_name,admin=admin)
-    member = get_object_or_404(Member,member=request.user,group=group)
-    belbin_form = get_object_or_404(BelbinUserProfile,member=member)
+    admin = get_object_or_404(User, username=username)
+    group = get_object_or_404(Group, name=group_name, admin=admin)
+    member = get_object_or_404(Member, member=request.user, group=group)
+    belbin_form = get_object_or_404(ProfileForm, member=member)
 
     return render(request, 'results.html', {
         'profile': belbin_form

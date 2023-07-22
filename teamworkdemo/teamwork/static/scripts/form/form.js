@@ -465,6 +465,18 @@ new Vue({
             // agregar las secciones faltantes...
         ]
     },
+
+    mounted() {
+
+        for (const section of this.sections) {
+            for (question of section.questions) {
+                console.log(question)
+                question.points = parseInt(question.points) === 0 ? "" : question.points
+            }
+        }
+
+    },
+
     methods: {
         submitForm(event) {
             // acciones cuando se presiona aceptar
@@ -553,7 +565,7 @@ new Vue({
                     }
 
                     // incrementar los puntos 
-                    points = parseInt(formData.get(question.profile)) + parseInt(question.points)
+                    points = Number(formData.get(question.profile)) + Number(question.points)
                     formData.set(question.profile, points)
                 }
             }
@@ -566,14 +578,21 @@ new Vue({
             handler(form) {
 
                 // actualizar los puntos en cada seccion 
-                for (const section of form) {
+                for (section of form) {
+
                     section.points = section.questions.reduce((sum, question) => {
-                        return sum + parseInt(question.points);
+                        return sum + Number(question.points);
                     }, 0);
+
+                    for (question of section.questions) {
+                        console.log(question)
+                        question.points = parseInt(question.points) === 0 ? "" : question.points
+                    }
                 }
 
             },
             deep: true
-        }
+        },
+
     }
 })

@@ -65,7 +65,16 @@
 
         <div v-for="question in section.questions" :key="question.id" class="mt-2 d-flex gap-2 border rounded">
           <label class="p-3 ">[[ question.label ]]</label>
-          <input min="0" type="number" v-model.number="question.points" class="ms-auto text-center border-0">
+
+          <input 
+            min="0"
+            type="number"
+            list="numbers"
+            placeholder="0"
+            v-model.number="question.points" 
+            class="ms-auto text-center border-0"
+          >
+
         </div>
         
       </div>
@@ -73,6 +82,20 @@
       <div class="mt-2 d-flex gap-2 mt-5">
         <button class="btn btn-primary" type="submit">Enviar formulario</button>
       </div>
+
+      <datalist id="numbers">
+        <option value="0">
+        <option value="1">
+        <option value="2">
+        <option value="3">
+        <option value="4">
+        <option value="5">
+        <option value="6">
+        <option value="7">
+        <option value="8">
+        <option value="9">
+        <option value="10">
+      </datalist>
     </form>
 
     <script src="{% static 'scripts/form/form.js' %}"></script>

@@ -1,7 +1,9 @@
+from enum import Enum
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MinValueValidator
+from django.forms.models import model_to_dict
 
 
 class Profile(models.Model):
@@ -41,7 +43,6 @@ class Member(models.Model):
     """
     Relaciona los miembros con los grupos 
     """
-
     member = models.ForeignKey(
         User,
         related_name='group_member',
@@ -56,33 +57,26 @@ class Member(models.Model):
         unique_together = (('member', 'group'))
 
     def profiles(self):
-        profiles = BelbinUserProfile.objects.filter(
+        profiles = ProfileForm.objects.filter(
             member=self)
 
         if not profiles.exists():
             return []
 
-        return profiles.first().results()
+        return profiles.first().primary_roles()
 
 
-class BelbinUserProfile(models.Model):
-    """
-    formularios realizados
-    """
-
-    RESOURCE_INVESTIGATOR = 'resource_investigator'
-    TEAM_WORKER = 'team_worker'
-    COORDINATOR = 'coordinator'
-    PLANT = 'plant'
-    MONITOR_EVALUATOR = 'monitor_evaluator'
-    SPECIALIST = 'specialist'
-    SHAPER = 'shaper'
-    IMPLEMENTER = 'implementer'
-    COMPLETER_FINISHER = 'completer_finisher'
-
-    # datos del usuario
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(default=timezone.now)
+class BelbinProfile(models.Model):
+    class Roles(Enum):
+        RESOURCE_INVESTIGATOR = 'resource_investigator'
+        TEAM_WORKER = 'team_worker'
+        COORDINATOR = 'coordinator'
+        PLANT = 'plant'
+        MONITOR_EVALUATOR = 'monitor_evaluator'
+        SPECIALIST = 'specialist'
+        SHAPER = 'shaper'
+        IMPLEMENTER = 'implementer'
+        COMPLETER_FINISHER = 'completer_finisher'
 
     # perfiles de belbin
     resource_investigator = models.IntegerField(
@@ -121,50 +115,33 @@ class BelbinUserProfile(models.Model):
         default=0,
         validators=[MinValueValidator(0)])
 
-    # metadatos de la calse
-    class Meta:
-        ordering = ['-timestamp']
-
-    def results(self):
+    def primary_roles(self):
         """Retorna la lista de los perfiles mas altos
 
         Returns:
             list: lista con los perfiles
         """
 
-        max_value = max(
-            self.resource_investigator,
-            self.team_worker,
-            self.coordinator,
-            self.plant,
-            self.monitor_evaluator,
-            self.specialist,
-            self.shaper,
-            self.implementer,
-            self.completer_finisher,
-        )
+        roles = model_to_dict(
+            self,
+            fields=[role.value for role in BelbinProfile.Roles])
 
-        # lista con los nombres de los perfiles más altos
-        a = self.to_dict()
+        max_value = max(roles.values())
+        primary = [key for key in roles if roles[key] == max_value]
 
-        b = [k for k in a if a[k] == max_value]
+        return primary
 
-        return b
 
-    def to_dict(self):
-        """extrae los valores de cada perfil y los retona como un diccionario
+class ProfileForm(BelbinProfile):
+    """
+    formularios realizados
+    """
 
-        Returns:
-            dict: resultado para cada perfil
-        """
-        return {
-            "resource_investigator": self.resource_investigator,
-            "team_worker": self.team_worker,
-            "coordinator": self.coordinator,
-            "plant": self.plant,
-            "monitor_evaluator": self.monitor_evaluator,
-            "specialist": self.specialist,
-            "shaper": self.shaper,
-            "implementer": self.implementer,
-            "completer_finisher": self.completer_finisher,
-        }
+    # datos del usuario
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    # metadatos de la calse
+
+    class Meta:
+        ordering = ['-timestamp']
