@@ -55,12 +55,12 @@ class ProfileForm {
 
 BelbinProfile <|-- ProfileForm
 
-Group "1" -- "0..*" Member : has
-User "1" -- "1" Profile : has
-User "1" -- "0..*" Group : administers
-User "1" -- "1" Member : is 
+Group "*" -- Member : has
+User "*" -- Profile : has
+User "*" -- Group : administers
+User "*" -- Member : is 
 
-Member "1" -- "1" ProfileForm
+Member "*" -- ProfileForm
 
 BelbinProfile +-- Roles : contains
 @enduml
