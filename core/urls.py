@@ -1,5 +1,7 @@
 from django.urls import path
 
+from core.views import FormView
+
 urlpatterns = [
     path(
         route='',
