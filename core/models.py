@@ -41,7 +41,7 @@ class EvaluationForm(models.Model):
 class Section(models.Model):
     title = models.CharField(max_length=250)
     evaluation = models.ForeignKey(EvaluationForm, on_delete=models.CASCADE, related_name='sections')
-    questions = models.ManyToManyField(to='Question', related_name='sections')
+    questions = models.ManyToManyField(to='Question', related_name='sections', blank=True)
 
     def __str__(self):
         return self.title
@@ -49,6 +49,7 @@ class Section(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length=250)
     profile = models.CharField(choices=BelbinRole.choices, max_length=2)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='qewq')
 
     def __str__(self):
         return self.title
