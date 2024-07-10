@@ -6,7 +6,7 @@ from .models import *
 # Register your models here.
 
 
-class QuestionInline(admin.StackedInline):
+class QuestionInline(admin.TabularInline):
     model = Question
     extra = 0
 
@@ -20,9 +20,11 @@ class SectionAdmin(admin.ModelAdmin):
 class SectionInline(admin.StackedInline):
     model = Section
     show_change_link = True
-    exclude = ('questions',)
-    readonly_fields = ('title',)
+    exclude = ('questions','title')
     extra = 0
+
+    def has_add_permission(self, request, obj=None):
+        return False  # Disable add permission
 
 
 @admin.register(EvaluationForm)

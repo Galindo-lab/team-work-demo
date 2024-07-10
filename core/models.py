@@ -37,7 +37,7 @@ class BelbinProfile(models.Model):
 
 
 class EvaluationForm(models.Model):
-    title = models.CharField(max_length=250, default="")
+    title = models.TextField()
     sinopsis = models.TextField()
     instructions = models.TextField()
     section = models.ManyToManyField(to='Question', related_name='fsfdsfsd')
@@ -47,7 +47,7 @@ class EvaluationForm(models.Model):
 
 
 class Section(models.Model):
-    title = models.CharField(max_length=250)
+    title = models.TextField()
     evaluation = models.ForeignKey(EvaluationForm, on_delete=models.CASCADE, related_name='sections')
     questions = models.ManyToManyField(to='Question', related_name='sections', blank=True)
 
@@ -56,7 +56,7 @@ class Section(models.Model):
 
 
 class Question(models.Model):
-    title = models.CharField(max_length=250)
+    title = models.TextField()
     profile = models.CharField(choices=BelbinRole.choices, max_length=2)
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name='qewq')
 
