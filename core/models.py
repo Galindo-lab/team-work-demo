@@ -20,6 +20,10 @@ class BelbinRole(models.TextChoices):
 
 
 class BelbinProfile(models.Model):
+
+    class Meta:
+        abstract = True
+
     # perfiles de belbin
     resource_investigator = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     team_worker = models.IntegerField(default=0, validators=[MinValueValidator(0)])
@@ -60,10 +64,10 @@ class Question(models.Model):
         return self.title
 
 
-class GroupForm(models.Model):
+class GroupForm(BelbinProfile):
+
     group = models.ForeignKey(to='Group', on_delete=models.CASCADE, related_name='groups')
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    result = models.ForeignKey(to=BelbinProfile, on_delete=models.CASCADE)
     done = models.BooleanField(default=False)
 
 

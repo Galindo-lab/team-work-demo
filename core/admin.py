@@ -34,8 +34,12 @@ class EvaluationFormAdmin(admin.ModelAdmin):
 class GroupFormInline(admin.TabularInline):
     model = GroupForm
     #readonly_fields = ('user', 'result', "done")
-    ordering = ("user", "result", "done",)
     extra = 0
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        return fields[::-1]  # Invierte el orden de los campos
+
 
 
 @admin.register(Group)
@@ -44,4 +48,4 @@ class GroupAdmin(admin.ModelAdmin):
     # filter_horizontal = ('members',)
 
 
-admin.site.register(BelbinProfile)
+#admin.site.register(BelbinProfile)
