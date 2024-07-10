@@ -1,6 +1,6 @@
 from django import forms
 
-from core.models import BelbinProfile, GroupForm
+from core.models import BelbinProfile, EvaluationResult
 
 # forms.py
 from django import forms

@@ -32,13 +32,25 @@ class EvaluationFormAdmin(admin.ModelAdmin):
 
 
 class GroupFormInline(admin.TabularInline):
-    model = GroupForm
-    #readonly_fields = ('user', 'result', "done")
+    model = EvaluationResult
     extra = 0
 
     def get_fields(self, request, obj=None):
         fields = super().get_fields(request, obj)
         return fields[::-1]  # Invierte el orden de los campos
+
+    # Método para hacer los campos readonly
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # Esto significa que el objeto ya existe (no es nuevo)
+            return [field.name for field in self.model._meta.fields]
+        return []
+
+    # Método para evitar la edición de inlines
+    def has_change_permission(self, request, obj=None):
+        if obj:  # Esto significa que el objeto ya existe (no es nuevo)
+            return False
+        return True
+
 
 
 

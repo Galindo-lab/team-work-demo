@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
 from .forms import BelbinForm, JoinGroupForm
-from .models import BelbinProfile, GroupForm
+from .models import BelbinProfile, EvaluationResult
 
 
 class FormView(CreateView):
@@ -25,11 +25,11 @@ def join_group(request):
             user = request.user
 
             # Verificar si el usuario ya es miembro del grupo
-            if GroupForm.objects.filter(group=group, user=user).exists():
+            if EvaluationResult.objects.filter(group=group, user=user).exists():
                 messages.warning(request, "Ya eres miembro de este grupo.")
             else:
-                # Crear el GroupForm para asociar el usuario al grupo
-                GroupForm.objects.create(group=group, user=user)
+                # Crear el EvaluationResult para asociar el usuario al grupo
+                EvaluationResult.objects.create(group=group, user=user)
                 messages.success(request, f"Te has unido al grupo {group.name}.")
             return redirect('some_view_name')  # Redirigir a una vista apropiada después de unirse
     else:

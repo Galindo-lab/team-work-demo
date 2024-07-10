@@ -64,7 +64,7 @@ class Question(models.Model):
         return self.title
 
 
-class GroupForm(BelbinProfile):
+class EvaluationResult(BelbinProfile):
 
     group = models.ForeignKey(to='Group', on_delete=models.CASCADE, related_name='groups')
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
@@ -79,4 +79,4 @@ class Group(models.Model):
     name = models.CharField(max_length=250)
     creator = models.ForeignKey(to=User, on_delete=models.CASCADE)
     evaluation = models.ForeignKey(to=EvaluationForm, on_delete=models.CASCADE)
-    members = models.ManyToManyField(to=User, through=GroupForm, related_name='qweqeff')
+    members = models.ManyToManyField(to=User, through=EvaluationResult, related_name='qweqeff')
