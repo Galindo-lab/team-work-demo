@@ -1,0 +1,640 @@
+[
+    {
+        "model": "core.evaluationform",
+        "pk": 1,
+        "fields": {
+            "title": "Belbin",
+            "section": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 1,
+        "fields": {
+            "title": "¿Qué es lo que yo creo que puedo aportar a un equipo?",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 2,
+        "fields": {
+            "title": "Si tuviera algún problemilla trabajando en equipo, podría ser debido a:",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 3,
+        "fields": {
+            "title": "Cuando estoy metido en un proyecto con otras personas:",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 4,
+        "fields": {
+            "title": "Mi forma de abordar el trabajo en equipo es:",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 5,
+        "fields": {
+            "title": "Obtengo satisfacción de un trabajo porque...",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 6,
+        "fields": {
+            "title": "Si de repente me dan la responsabilidad de una tarea difícil, con un tiempo limitado y gente desconocida:",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.section",
+        "pk": 7,
+        "fields": {
+            "title": "Haciendo referencia a los problemas que tengo trabajando en equipo:",
+            "evaluation": 1,
+            "questions": []
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 4,
+        "fields": {
+            "title": "Creo que sé ver rápidamente nuevas oportunidades y sacar partido de ellas.",
+            "profile": "CF",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 5,
+        "fields": {
+            "title": "Sé trabajar bien con una amplia variedad de gente.",
+            "profile": "TW",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 6,
+        "fields": {
+            "title": "Producir ideas es una de mis aptitudes personales.",
+            "profile": "PL",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 7,
+        "fields": {
+            "title": "Mi habilidad reside en ser capaz de hacer que las personas hablen cuando detecto que tienen algo de valor con lo que contribuir a los objetivos del grupo.",
+            "profile": "CO",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 8,
+        "fields": {
+            "title": "Mi efectividad personal tiene mucho que ver con mi capacidad para 'seguir hacia delante'.",
+            "profile": "RI",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 9,
+        "fields": {
+            "title": "No me importa afrontar una impopularidad temporal si esta lleva a resultados que al final merezcan la pena.",
+            "profile": "SH",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 10,
+        "fields": {
+            "title": "Normalmente soy capaz de saber qué es realista y qué tiene posibilidades de funcionar.",
+            "profile": "IM",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 11,
+        "fields": {
+            "title": "Puedo argumentar razonadamente a favor de distintas alternativas de acción excluyentes sin que estén presentes los prejuicios.",
+            "profile": "ME",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 12,
+        "fields": {
+            "title": "Mis comentarios tanto sobre los puntos generales como específicos son siempre bien recibidos.",
+            "profile": "SP",
+            "section": 1
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 13,
+        "fields": {
+            "title": "No estoy a gusto a menos que las reuniones estén bien estructuradas, controladas y generalmente bien conducidas.",
+            "profile": "IM",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 14,
+        "fields": {
+            "title": "Tengo inclinación a ser demasiado generoso hacia otros que tienen un punto de vista válido al que no se le ha prestado suficiente atención.",
+            "profile": "CO",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 15,
+        "fields": {
+            "title": "Cuando en el equipo nos ponemos a buscar nuevas ideas, yo tiendo a hablar demasiado.",
+            "profile": "CF",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 16,
+        "fields": {
+            "title": "Mi punto de vista, más objetivo, hace que me resulte difícil reunirme cómodamente con colegas.",
+            "profile": "ME",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 17,
+        "fields": {
+            "title": "Algunas veces soy visto como enérgico y dominante si se tiene que hacer una cosa.",
+            "profile": "SH",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 18,
+        "fields": {
+            "title": "Encuentro difícil dirigir estando al frente, quizá porque me puedo dejar llevar demasiado por el ambiente del grupo.",
+            "profile": "TW",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 19,
+        "fields": {
+            "title": "Tengo tendencia a ensimismarme en ideas que se me ocurren a mí; y por ello perder el contacto con lo que estamos haciendo.",
+            "profile": "PL",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 20,
+        "fields": {
+            "title": "Mis colegas ven que suelo estar preocupado innecesariamente por los detalles y por la posibilidad de que las cosas vayan mal.",
+            "profile": "RI",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 21,
+        "fields": {
+            "title": "Me cuesta contribuir a menos que el tema tenga algo que ver con algo que conozca bien.",
+            "profile": "SP",
+            "section": 2
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 22,
+        "fields": {
+            "title": "Tengo capacidad para influir sobre las personas sin presionarlas.",
+            "profile": "CO",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 23,
+        "fields": {
+            "title": "Mi nivel de atención continua me evita cometer tanto omisiones como errores por descuido.",
+            "profile": "RI",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 24,
+        "fields": {
+            "title": "No dudo en tomar medidas para asegurar que en la reunión no se pierde el tiempo ni se pierden de vista los objetivos.",
+            "profile": "SH",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 25,
+        "fields": {
+            "title": "Se puede contar conmigo para contribuir con algo original.",
+            "profile": "PL",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 26,
+        "fields": {
+            "title": "Estoy siempre dispuesto a respaldar una buena sugerencia de interés para todos.",
+            "profile": "TW",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 27,
+        "fields": {
+            "title": "Me gusta buscar lo último en ideas y desarrollos.",
+            "profile": "CF",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 28,
+        "fields": {
+            "title": "Creo que mi capacidad de juicio puede ayudar a tomar la decisión adecuada.",
+            "profile": "ME",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 29,
+        "fields": {
+            "title": "Se puede confiar en mí para contar con que todo el trato esencial esté organizado.",
+            "profile": "IM",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 30,
+        "fields": {
+            "title": "Se pede tener la seguridad de que seré yo mismo.",
+            "profile": "SP",
+            "section": 3
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 31,
+        "fields": {
+            "title": "Tengo bastante interés en conocer mejor a los colegas.",
+            "profile": "TW",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 32,
+        "fields": {
+            "title": "Soy reacio a dar una oportunidad a los puntos de vista de otros o a apoyar el punto de vista de una minoría.",
+            "profile": "SH",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 33,
+        "fields": {
+            "title": "Generalmente encuentro un argumento con el que refutar proposiciones poco firmes.",
+            "profile": "ME",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 34,
+        "fields": {
+            "title": "Creo que tengo talento para hacer que funcionen las cosas una vez tiene que ponerse en práctica un plan.",
+            "profile": "IM",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 35,
+        "fields": {
+            "title": "Tengo tendencia a evitar lo obvio y salir con lo inesperado.",
+            "profile": "PL",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 36,
+        "fields": {
+            "title": "Aporto un toque de perfección a todo el trabajo que dirijo.",
+            "profile": "RI",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 37,
+        "fields": {
+            "title": "Hago uso de contactos ajenos al grupo en sí mismo.",
+            "profile": "CF",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 38,
+        "fields": {
+            "title": "Al mismo tiempo que estoy interesado en todos los puntos de vista, no tengo ningún problema cuando la decisión ha de ser tomada.",
+            "profile": "CO",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 39,
+        "fields": {
+            "title": "Contribuyo cuando realmente sé del tema.",
+            "profile": "SP",
+            "section": 4
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 40,
+        "fields": {
+            "title": "Disfruto analizando situaciones y sopesando las posibles alternativas.",
+            "profile": "ME",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 41,
+        "fields": {
+            "title": "Me intereso por encontrar soluciones prácticas a los problemas.",
+            "profile": "IM",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 42,
+        "fields": {
+            "title": "Me gusta ver que estoy fomentando buenas relaciones de trabajo.",
+            "profile": "TW",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 43,
+        "fields": {
+            "title": "Sé influir fuertemente en la toma de decisiones.",
+            "profile": "SH",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 44,
+        "fields": {
+            "title": "Sé contactar con gente que podría tener algo nuevo que ofrecer.",
+            "profile": "CF",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 45,
+        "fields": {
+            "title": "Sé poner a la gente de acuerdo en un camino a seguir, si es necesario.",
+            "profile": "CO",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 46,
+        "fields": {
+            "title": "Me siento en mi elemento cuando puedo dedicar toda mi atención a una tarea.",
+            "profile": "RI",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 47,
+        "fields": {
+            "title": "Me gusta encontrar un área que ensanche mi imaginación.",
+            "profile": "PL",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 48,
+        "fields": {
+            "title": "Siento que estoy utilizando mi formación y mis especiales aptitudes para sacar partido de las situaciones.",
+            "profile": "SP",
+            "section": 5
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 49,
+        "fields": {
+            "title": "Me apetecería retirarme a un rincón para idear una salida al problema antes que aplicar una línea de acciones.",
+            "profile": "PL",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 50,
+        "fields": {
+            "title": "Estaría dispuesto a trabajar con la persona que me mostrara la propuesta más positiva.",
+            "profile": "TW",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 51,
+        "fields": {
+            "title": "Encontraría la manera de reducir el tamaño de la tarea discerniendo a qué aspecto contribuirán mejor los diferentes individuos.",
+            "profile": "CO",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 52,
+        "fields": {
+            "title": "Mi sentido natural de la urgencia ayudaría a asegurar que no sobrepasáramos el plazo previsto.",
+            "profile": "RI",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 53,
+        "fields": {
+            "title": "Creo que no me alteraría y mantendría mi capacidad de pensar intacta.",
+            "profile": "ME",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 54,
+        "fields": {
+            "title": "Mantendría invariables los objetivos a pesar de las presiones.",
+            "profile": "IM",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 55,
+        "fields": {
+            "title": "Llevaría de la mano al grupo si viera que no está haciendo ningún progreso.",
+            "profile": "SH",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 56,
+        "fields": {
+            "title": "Fomentaría discusiones de cara a estimular nuevas ideas y hacer que algo empezara a moverse.",
+            "profile": "CF",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 57,
+        "fields": {
+            "title": "Enfocaría todo el problema desde el punto de vista del conocimiento que tuviera sobre el tema.",
+            "profile": "SP",
+            "section": 6
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 58,
+        "fields": {
+            "title": "Suelo mostrar mi impaciencia con aquellos que están impidiendo el progreso.",
+            "profile": "SH",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 59,
+        "fields": {
+            "title": "Los demás podrían criticarme por ser demasiado analítico e insuficientemente intuitivo.",
+            "profile": "ME",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 60,
+        "fields": {
+            "title": "Mi deseo de asegurar que el trabajo se hace de manera adecuada puede suponer un freno.",
+            "profile": "RI",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 61,
+        "fields": {
+            "title": "Tiendo a aburrirme bastante fácilmente y a confiar en uno o dos miembros del grupo interesantes para sacarme del aburrimiento.",
+            "profile": "CF",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 62,
+        "fields": {
+            "title": "Encuentro difícil empezar algo a menos que las metas estén claras.",
+            "profile": "IM",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 63,
+        "fields": {
+            "title": "A veces soy pobre en la explicación y clarificación de ideas complejas que se me ocurren a mí.",
+            "profile": "PL",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 64,
+        "fields": {
+            "title": "Soy consciente de que pido a los otros las cosas que no puedo hacer por mí mismo.",
+            "profile": "CO",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 65,
+        "fields": {
+            "title": "Dudo en exponer mis puntos de vista cuando me encuentro con una buena oposición.",
+            "profile": "TW",
+            "section": 7
+        }
+    },
+    {
+        "model": "core.question",
+        "pk": 66,
+        "fields": {
+            "title": "Me inclino a pensar que estoy perdiendo el tiempo y que lo haría mejor yo solo.",
+            "profile": "SP",
+            "section": 7
+        }
+    }
+]
