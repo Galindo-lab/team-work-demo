@@ -20,65 +20,35 @@ class BelbinRole(models.TextChoices):
 
 class BelbinProfile(models.Model):
     # perfiles de belbin
-    resource_investigator = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+    resource_investigator = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    team_worker = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    coordinator = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    plant = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    monitor_evaluator = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    specialist = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    shaper = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    implementer = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    completer_finisher = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
-    team_worker = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
 
-    coordinator = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+class EvaluationForm(models.Model):
+    title = models.CharField(max_length=250, default="a")
+    section = models.ManyToManyField(to='Question', related_name='fsfdsfsd')
 
-    plant = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+    def __str__(self):
+        return self.title
 
-    monitor_evaluator = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+class Section(models.Model):
+    title = models.CharField(max_length=250)
+    evaluation = models.ForeignKey(EvaluationForm, on_delete=models.CASCADE, related_name='sections')
+    questions = models.ManyToManyField(to='Question', related_name='sections')
 
-    specialist = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+    def __str__(self):
+        return self.title
 
-    shaper = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+class Question(models.Model):
+    title = models.CharField(max_length=250)
+    profile = models.CharField(choices=BelbinRole.choices, max_length=2)
 
-    implementer = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
-
-    completer_finisher = models.IntegerField(
-        default=0,
-        validators=[
-            MinValueValidator(0)
-        ]
-    )
+    def __str__(self):
+        return self.title
