@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import *
 
 
@@ -20,6 +21,7 @@ class SectionInline(admin.StackedInline):
     model = Section
     show_change_link = True
     exclude = ('questions',)
+    readonly_fields = ('title',)
     extra = 0
 
 
@@ -27,3 +29,19 @@ class SectionInline(admin.StackedInline):
 class EvaluationFormAdmin(admin.ModelAdmin):
     exclude = ('section',)
     inlines = [SectionInline]
+
+
+class GroupFormInline(admin.TabularInline):
+    model = GroupForm
+    #readonly_fields = ('user', 'result', "done")
+    ordering = ("user", "result", "done",)
+    extra = 0
+
+
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    inlines = [GroupFormInline]
+    # filter_horizontal = ('members',)
+
+
+admin.site.register(BelbinProfile)

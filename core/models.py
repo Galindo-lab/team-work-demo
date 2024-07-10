@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -32,11 +33,14 @@ class BelbinProfile(models.Model):
 
 
 class EvaluationForm(models.Model):
-    title = models.CharField(max_length=250, default="a")
+    title = models.CharField(max_length=250, default="")
+    sinopsis = models.TextField()
+    instructions = models.TextField()
     section = models.ManyToManyField(to='Question', related_name='fsfdsfsd')
 
     def __str__(self):
         return self.title
+
 
 class Section(models.Model):
     title = models.CharField(max_length=250)
@@ -46,6 +50,7 @@ class Section(models.Model):
     def __str__(self):
         return self.title
 
+
 class Question(models.Model):
     title = models.CharField(max_length=250)
     profile = models.CharField(choices=BelbinRole.choices, max_length=2)
@@ -53,3 +58,21 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class GroupForm(models.Model):
+    group = models.ForeignKey(to='Group', on_delete=models.CASCADE, related_name='groups')
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    result = models.ForeignKey(to=BelbinProfile, on_delete=models.CASCADE)
+    done = models.BooleanField(default=False)
+
+
+class Group(models.Model):
+
+    class Meta():
+        unique_together = ('name', 'creator')
+
+    name = models.CharField(max_length=250)
+    creator = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    evaluation = models.ForeignKey(to=EvaluationForm, on_delete=models.CASCADE)
+    members = models.ManyToManyField(to=User, through=GroupForm, related_name='qweqeff')
