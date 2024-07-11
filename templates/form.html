@@ -19,17 +19,42 @@
 
         const SectionComponent = {
             props: ['section'],
+            data() {
+                return {
+                    points: this.section.questions.map(() => 0)  // Initialize points for each question
+                };
+            },
             template: `
                 <div>
                     <h2>[[ section.title ]]</h2>
                     <ul>
-                        <li v-for="question in section.questions" :key="question.title">
+                        <li v-for="(question, index) in section.questions" :key="question.title">
                             <p>[[ question.title ]] ([[ question.profile ]])</p>
+                            <input type="number" v-model.number="points[index]" min="0" />
                         </li>
                     </ul>
+                    <button @click="submitPoints">Submit</button>
                 </div>
             `,
-            delimiters: ['[[', ']]']
+            delimiters: ['[[', ']]'],
+            methods: {
+                submitPoints() {
+                    const pointsByProfile = this.getPointsByProfile();
+                    console.log(pointsByProfile);
+                },
+                getPointsByProfile() {
+                    const pointsByProfile = {};
+
+                    this.section.questions.forEach((question, index) => {
+                        if (!pointsByProfile[question.profile]) {
+                            pointsByProfile[question.profile] = 0;
+                        }
+                        pointsByProfile[question.profile] += this.points[index];
+                    });
+
+                    return JSON.stringify(pointsByProfile);
+                }
+            }
         };
 
         const app = Vue.createApp({
