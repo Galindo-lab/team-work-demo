@@ -8,10 +8,15 @@ from .forms import JoinGroupForm
 from .models import Group, EvaluationResult
 
 
+class AnswerFormView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        pass
+
+
 class JoinGroupView(LoginRequiredMixin, View):
 
-    def get(self, request, name=None):
-        group = get_object_or_404(Group, name=name)
+    def get(self, request, pk=None):
+        group = get_object_or_404(Group, pk=pk)
 
         if EvaluationResult.objects.filter(group=group, user=self.request.user).exists():
             return redirect('group_detail', pk=group.pk)
@@ -22,7 +27,7 @@ class JoinGroupView(LoginRequiredMixin, View):
             context={'form': JoinGroupForm(initial={'group': group})}
         )
 
-    def post(self, request, name=None):
+    def post(self, request, pk=None):
         form = JoinGroupForm(request.POST)
         if form.is_valid():
             group = form.cleaned_data['group']

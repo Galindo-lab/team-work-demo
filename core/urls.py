@@ -6,7 +6,7 @@ from core.views import JoinGroupView, GroupListView, GroupDetailView
 
 urlpatterns = [
     path(route='group/', view=GroupListView.as_view(), name='groups_list'),
-    path(route='join/<str:name>', view=JoinGroupView.as_view(), name='join_group'),
+    path(route='join/<int:pk>', view=JoinGroupView.as_view(), name='join_group'),
     path(route='group/<int:pk>/', view=GroupDetailView.as_view(), name='group_detail'),
 ]
 
