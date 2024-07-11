@@ -1,0 +1,20 @@
+<!-- group_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Grupo</title>
+</head>
+<body>
+    <h1>Detalles del Grupo: {{ group.name }}</h1>
+    <p>Creado por: {{ group.creator.username }}</p>
+    <p>Evaluación: {{ group.evaluation.title }}</p>
+    <p>Código: {{ group.code }}</p>
+    <h2>Miembros</h2>
+    <ul>
+        {% for member in group.members.all %}
+            <li>{{ member.username }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
