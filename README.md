@@ -11,3 +11,7 @@ python manage.py loaddata belbin.json
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+```shell
+python manage.py runserver
+```

@@ -2,13 +2,11 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from belbin import settings
-from core.views import *
-
-
+from core.views import JoinGroupView, GroupListView
 
 urlpatterns = [
-    path(route='', name='index', view=FormView.as_view()),
-    path('join-group/', join_group, name='join_group'),
+    path(route='groups/', view=GroupListView.as_view(), name='groups'),
+    path(route='join/<str:name>', view=JoinGroupView.as_view(), name='join_group'),
 ]
 
 # https://github.com/fabiocaccamo/django-admin-interface/issues/4

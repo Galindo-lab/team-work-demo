@@ -1,8 +1,5 @@
-{% block content %}
-  <h2>Unirse a un Grupo</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Unirse</button>
-  </form>
-{% endblock %}
+{% for group in groups %}
+
+    <a href="{% url 'join_group' group.name %}">{{ group.name }}</a>
+
+{% endfor %}

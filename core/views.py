@@ -1,38 +1,29 @@
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
+from django.views import View
 
-from .forms import BelbinForm, JoinGroupForm
-from .models import BelbinProfile, EvaluationResult
-
-
-class FormView(CreateView):
-    model = BelbinProfile
-    form_class = BelbinForm
-    template_name = 'belbin.html'
-    success_url = reverse_lazy('yourmodel-list')
+from .models import Group
 
 
-@login_required
-def join_group(request):
-    if request.method == 'POST':
-        form = JoinGroupForm(request.POST)
-        if form.is_valid():
-            group = form.cleaned_data['group']
-            user = request.user
+class JoinGroupView(LoginRequiredMixin, View):
+    def get(self, request, name=None):
+        pass
 
-            # Verificar si el usuario ya es miembro del grupo
-            if EvaluationResult.objects.filter(group=group, user=user).exists():
-                messages.warning(request, "Ya eres miembro de este grupo.")
-            else:
-                # Crear el EvaluationResult para asociar el usuario al grupo
-                EvaluationResult.objects.create(group=group, user=user)
-                messages.success(request, f"Te has unido al grupo {group.name}.")
-            return redirect('some_view_name')  # Redirigir a una vista apropiada después de unirse
-    else:
-        form = JoinGroupForm()
+    def post(self, request):
+        pass
 
-    return render(request, 'join_group.html', {'form': form})
+
+class GroupListView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        return render(
+            request=request,
+            template_name='join_group.html',
+            context={
+                'groups': Group.objects.all()
+            }
+        )
+
+    def post(self, request):
+        pass

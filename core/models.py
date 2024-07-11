@@ -77,6 +77,10 @@ class Group(models.Model):
         unique_together = ('name', 'creator')
 
     name = models.CharField(max_length=250)
-    creator = models.ForeignKey(to=User, on_delete=models.CASCADE)
     evaluation = models.ForeignKey(to=EvaluationForm, on_delete=models.CASCADE)
+    creator = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    password = models.CharField(max_length=25)
     members = models.ManyToManyField(to=User, through=EvaluationResult, related_name='qweqeff')
+
+    def __str__(self):
+        return self.name
