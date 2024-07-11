@@ -79,7 +79,7 @@ class Group(models.Model):
     name = models.CharField(max_length=250)
     evaluation = models.ForeignKey(to=EvaluationForm, on_delete=models.CASCADE)
     creator = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    password = models.CharField(max_length=25)
+    code = models.CharField(max_length=25)
     members = models.ManyToManyField(to=User, through=EvaluationResult, related_name='qweqeff')
 
     def __str__(self):

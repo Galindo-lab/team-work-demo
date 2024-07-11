@@ -8,8 +8,23 @@ from .models import Group
 
 
 class JoinGroupForm(forms.Form):
-    group = forms.ModelChoiceField(queryset=Group.objects.all(), label="Seleccione un grupo")
-    password = forms.CharField(widget=forms.PasswordInput)
+    group = forms.ModelChoiceField(queryset=Group.objects.all())
+    code = forms.CharField(widget=forms.PasswordInput)
+
+    def is_valid(self):
+        valid = super(JoinGroupForm, self).is_valid()
+        if not valid:
+            return valid
+
+        group = self.cleaned_data.get('group')
+        password = self.cleaned_data.get('code')
+
+        if group and password:
+            if group.code == password:
+                return True
+
+        self.add_error('code', 'Contraseña incorrecta.')
+        return False
 
 
 class BelbinForm(forms.ModelForm):

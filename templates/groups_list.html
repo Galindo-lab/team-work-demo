@@ -1,0 +1,5 @@
+{% for group in groups %}
+
+    <a href="{% url 'join_group' group.name %}">{{ group.name }}</a>
+
+{% endfor %}
