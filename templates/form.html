@@ -1,0 +1,50 @@
+<!-- form.html -->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Detalles del Formulario</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    {{ form|json_script:"form-json" }}
+</head>
+<body>
+    <div id="app">
+        <section-component :section="formData"></section-component>
+    </div>
+
+    <script>
+        const formData = JSON.parse(document.getElementById('form-json').textContent);
+
+        const SectionComponent = {
+            props: ['section'],
+            template: `
+                <div>
+                    <h2>[[ section.title ]]</h2>
+                    <ul>
+                        <li v-for="question in section.questions" :key="question.title">
+                            <p>[[ question.title ]] ([[ question.profile ]])</p>
+                        </li>
+                    </ul>
+                </div>
+            `,
+            delimiters: ['[[', ']]']
+        };
+
+        const app = Vue.createApp({
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    formData: formData
+                };
+            },
+            components: {
+                'section-component': SectionComponent
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

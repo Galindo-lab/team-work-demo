@@ -1,13 +1,11 @@
+# models.py
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+import json
 
 class BelbinRole(models.TextChoices):
-    """
-    Define los posibles roles Belbin en el sistema.
-    """
     RESOURCE_INVESTIGATOR = 'RI', _("Resource Investigator")
     TEAM_WORKER = 'TW', _("Team Worker")
     COORDINATOR = 'CO', _("Coordinator")
@@ -20,11 +18,9 @@ class BelbinRole(models.TextChoices):
 
 
 class BelbinProfile(models.Model):
-
     class Meta:
         abstract = True
 
-    # perfiles de belbin
     resource_investigator = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     team_worker = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     coordinator = models.IntegerField(default=0, validators=[MinValueValidator(0)])
@@ -45,6 +41,17 @@ class EvaluationForm(models.Model):
     def __str__(self):
         return self.title
 
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'sinopsis': self.sinopsis,
+            'instructions': self.instructions,
+            'sections': [section.to_dict() for section in self.sections.all()]
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
+
 
 class Section(models.Model):
     title = models.TextField()
@@ -53,6 +60,15 @@ class Section(models.Model):
 
     def __str__(self):
         return self.title
+
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'questions': [question.to_dict() for question in Question.objects.filter(section=self)],
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
 
 
 class Question(models.Model):
@@ -63,16 +79,20 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'profile': self.profile
+        }
+
 
 class EvaluationResult(BelbinProfile):
-
     group = models.ForeignKey(to='Group', on_delete=models.CASCADE, related_name='groups')
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     done = models.BooleanField(default=False)
 
 
 class Group(models.Model):
-
     class Meta():
         unique_together = ('name', 'creator')
 

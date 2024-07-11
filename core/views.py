@@ -5,12 +5,20 @@ from django.views import View
 from django.views.generic.detail import DetailView
 
 from .forms import JoinGroupForm
-from .models import Group, EvaluationResult
+from .models import Group, EvaluationResult, Section
 
 
 class AnswerFormView(LoginRequiredMixin, View):
-    def get(self, request, pk):
-        pass
+    def get(self, request, pk=None):
+        group = get_object_or_404(Group, pk=pk)
+
+        return render(
+            request=request,
+            template_name='form.html',
+            context={
+                'form': get_object_or_404(Section, pk=1).to_dict(),
+            }
+        )
 
 
 class JoinGroupView(LoginRequiredMixin, View):
