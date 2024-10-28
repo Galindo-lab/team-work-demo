@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <script src="belbin.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bamboo.css" />
+
+    <style>
+      /*body {
+        margin-top: 4rem;
+      }*/
+
+      .barra-superior {
+        position: fixed; /* Set the navbar to fixed position */
+        top: 0; /* Position the navbar at the top of the page */
+        right: 0;
+
+        width: 100%; /* Full width */
+        background-color: #9b1520;
+        color: #ffffff;
+
+        display: none;
+        text-align: center;
+
+        padding: 0.2rem;
+      }
+
+      .visible {
+        display: block;
+      }
+    </style>
+  </head>
+  <body x-data="preguntasApp()" x-init="init()">
+    <span id="top"></span>
+
+    <!-- Barra superior que se muestra si la suma de los puntos es mayor a 10 -->
+    <div
+      class="barra-superior"
+      x-bind:class="sumaSeccionActual() > 10 ? 'visible' : ''"
+    >
+      Los puntos en esta sección supera los 10
+    </div>
+
+    <!-- Tabla con preguntas y respuestas generadas dinámicamente con navegación -->
+    <template x-if="loaded">
+      <div>
+        <h3 x-text="data.sections[sectionIndex].name"></h3>
+
+        <p>Para cada sección distribuir un total de 10 puntos entre las afirmaciones</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Afirmaciones</th>
+              <th>Respuesta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template
+              x-for="(question, index) in data.sections[sectionIndex].questions"
+              :key="index"
+            >
+              <tr>
+                <td x-text="question.label"></td>
+                <td>
+                  <select
+                    @change="actualizarRespuesta(sectionIndex, index, $event.target.value)"
+                    x-model="respuestas[sectionIndex][index]"
+                  >
+                    <!-- Generar las opciones de 0 a 10 -->
+                    <template x-for="opcion in opciones" :key="opcion">
+                      <option :value="opcion" x-text="opcion"></option>
+                    </template>
+                  </select>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </template>
+
+    <!-- Botones de navegación -->
+    <p style="display: flex; justify-content: space-between">
+      <!-- Contenedor para agrupar los botones de "Regresar" y "Siguiente" -->
+      <span style="display: flex; gap: 10px">
+        <button @click="prevSection" :disabled="sectionIndex === 0">
+          Regresar
+        </button>
+
+        <button
+          @click="nextSection"
+          :disabled="sumaSeccionActual() !== 10 || sectionIndex === data.sections.length - 1"
+        >
+          Siguiente
+        </button>
+      </span>
+
+      <!-- Botón para ver los resultados solo si la suma de puntos es 10 en todas las secciones -->
+      <button
+        x-show="sectionIndex === data.sections.length - 1"
+        x-bind:disabled="!validarPuntosCompletos()"
+        @click="sumaPorPerfil()"
+        style="margin-left: auto"
+      >
+        Resultados
+      </button>
+    </p>
+  </body>
+</html>
+
+<script>
+  function preguntasApp() {
+    return {
+      data: {}, // Aquí se almacenarán los datos del JSON
+      opciones: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Opciones de selección
+      sectionIndex: 0, // Índice de la sección visible actualmente
+      respuestas: {}, // Almacenará las respuestas por sección y pregunta
+
+      // Función para cargar JSON desde el script del HTML
+      init() {
+        this.data = preguntasData; // Asignar la variable global preguntasData al objeto local
+        this.loaded = true;
+
+        // Inicializar respuestas con un valor por defecto (0)
+        this.data.sections.forEach((section, sectionIdx) => {
+          this.respuestas[sectionIdx] = {};
+          section.questions.forEach((question, questionIdx) => {
+            this.respuestas[sectionIdx][questionIdx] = 0; // Respuesta inicial es 0
+          });
+        });
+      },
+
+      // Función para ir a la siguiente sección
+      nextSection() {
+        if (this.sectionIndex < this.data.sections.length - 1) {
+          this.sectionIndex++;
+          window.location.href = "#";
+        }
+      },
+
+      // Función para regresar a la sección anterior
+      prevSection() {
+        if (this.sectionIndex > 0) {
+          this.sectionIndex--;
+          window.location.href = "#";
+        }
+      },
+
+      // Función para actualizar la respuesta seleccionada
+      actualizarRespuesta(sectionIdx, questionIdx, valor) {
+        this.respuestas[sectionIdx][questionIdx] = Number(valor); // Convertir el valor a número
+      },
+
+      // Función para obtener el número de la sección y los valores de las respuestas
+      obtenerResultadoPorPregunta() {
+        return this.data.sections.map((section, sectionIdx) =>
+          section.questions.map(
+            (_, questionIdx) => this.respuestas[sectionIdx][questionIdx]
+          )
+        );
+      },
+
+      // Función para calcular la suma de las respuestas de la sección actual
+      sumaSeccionActual() {
+        return this.respuestas[this.sectionIndex]
+          ? Object.values(this.respuestas[this.sectionIndex]).reduce(
+              (acc, val) => acc + val,
+              0
+            )
+          : 0;
+      },
+
+      // Función para calcular la suma de puntos por perfil
+      sumaPorPerfil() {
+        const perfilSuma = {}; // Objeto para almacenar la suma de puntos por perfil
+
+        // Iterar a través de las secciones y las preguntas
+        this.data.sections.forEach((section, sectionIdx) => {
+          section.questions.forEach((question, questionIdx) => {
+            const perfil = question.profile;
+            const valorRespuesta =
+              this.respuestas[sectionIdx][questionIdx] || 0;
+
+            // Si el perfil no existe en el objeto, inicializarlo a 0
+            if (!perfilSuma[perfil]) {
+              perfilSuma[perfil] = 0;
+            }
+
+            // Sumar el valor de la respuesta al perfil correspondiente
+            perfilSuma[perfil] += valorRespuesta;
+          });
+        });
+
+        console.log(perfilSuma); // Imprimir los resultados en la consola
+        return perfilSuma; // Devolver el objeto con la suma por perfil
+      },
+
+      // Función para verificar si todas las secciones suman 10 puntos
+      validarPuntosCompletos() {
+        return this.data.sections.every((_, sectionIdx) => {
+          const sumaSeccion = Object.values(this.respuestas[sectionIdx]).reduce(
+            (acc, val) => acc + val,
+            0
+          );
+          return sumaSeccion === 10;
+        });
+      },
+
+      // Función para imprimir los resultados simplificados en la consola
+      imprimirResultados() {
+        const resultados = this.obtenerResultadoPorPregunta();
+        console.log(resultados);
+      },
+    };
+  }
+</script>
